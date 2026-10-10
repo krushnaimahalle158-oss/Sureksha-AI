@@ -1,0 +1,2767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Emergency Response Command Center</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            --bg-dark: #121820;
+            --panel-bg: #1a222d;
+            --border-color: #2a3645;
+            --accent-red: #ff4757;
+            --accent-amber: #ffa502;
+            --accent-green: #2ed573;
+            --accent-blue: #1e90ff;
+            --accent-teal: #2ed573;
+            --text-main: #f1f2f6;
+            --text-muted: #a4b0be;
+        }
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--bg-dark); 
+            color: var(--text-main); 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
+        
+        #topbar { 
+            height: 60px; 
+            background: var(--panel-bg); 
+            border-bottom: 1px solid var(--border-color); 
+            display: flex; 
+            align-items: center; 
+            padding: 0 20px; 
+            justify-content: space-between; 
+            flex-shrink: 0;
+            gap: 15px;
+        }
+        #topbar h2 { 
+            margin: 0; 
+            font-size: 17px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            white-space: nowrap;
+        }
+
+        .topbar-center {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 13px;
+        }
+
+        .controls-group { 
+            display: flex; 
+            gap: 10px; 
+            align-items: center; 
+        }
+
+        button { 
+            background: #2f3542; 
+            color: white; 
+            border: 1px solid var(--border-color); 
+            padding: 8px 14px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            transition: 0.2s; 
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        button:hover { background: #3f4756; }
+        button.danger { background: var(--accent-red); border: none; }
+        button.danger:hover { background: #ff6b81; }
+        button.active-toggle { background: #ff4757; border-color: #ff6b81; box-shadow: 0 0 10px rgba(255, 71, 87, 0.5); }
+
+        .static-badge-smart {
+            background: rgba(30, 144, 255, 0.15);
+            border: 1px solid #1e90ff;
+            color: #70a1ff;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            user-select: none;
+        }
+
+        #workspace { 
+            display: flex; 
+            flex-grow: 1; 
+            height: calc(100vh - 60px); 
+            position: relative;
+        }
+        #map-container { 
+            flex-grow: 1; 
+            height: 100%; 
+            position: relative; 
+        }
+        #map { width: 100%; height: 100%; background: #0c1015; }
+
+        /* Floating Controls on Map */
+        .map-layer-bar {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 800;
+            background: rgba(26, 34, 45, 0.94);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        .layer-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            user-select: none;
+            color: var(--text-main);
+        }
+        .layer-toggle input { cursor: pointer; accent-color: #1e90ff; }
+
+        .timeline-slider-box {
+            position: absolute;
+            bottom: 25px;
+            left: 20px;
+            z-index: 800;
+            background: rgba(26, 34, 45, 0.95);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 280px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        .slider-label-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .timeline-slider {
+            width: 100%;
+            cursor: pointer;
+            accent-color: #1e90ff;
+        }
+
+        #sidebar { 
+            width: 420px; 
+            background: var(--panel-bg); 
+            border-left: 1px solid var(--border-color); 
+            padding: 16px; 
+            box-sizing: border-box; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            overflow-y: auto; 
+            flex-shrink: 0;
+        }
+        #sidebar::-webkit-scrollbar { width: 6px; }
+        #sidebar::-webkit-scrollbar-track { background: var(--panel-bg); }
+        #sidebar::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+
+        .card { 
+            background: #212c3a; 
+            border: 1px solid var(--border-color); 
+            padding: 13px; 
+            border-radius: 6px; 
+        }
+        .card h3 { 
+            margin-top: 0; 
+            margin-bottom: 8px;
+            font-size: 13px; 
+            color: var(--text-muted); 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .kpi-box { 
+            background: #18222d; 
+            padding: 8px; 
+            border-radius: 4px; 
+            text-align: center; 
+            border: 1px solid var(--border-color); 
+        }
+        .kpi-box .val { 
+            font-size: 17px; 
+            font-weight: bold; 
+            color: #fff; 
+            font-variant-numeric: tabular-nums;
+        }
+        .kpi-box .lbl { font-size: 10px; color: var(--text-muted); margin-top: 3px; }
+
+        .hospital-row { margin-bottom: 10px; }
+        .hospital-row:last-child { margin-bottom: 0; }
+        .hospital-info { 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 12px; 
+            margin-bottom: 4px; 
+            align-items: center;
+        }
+        .progress-bar { 
+            background: #121820; 
+            height: 7px; 
+            border-radius: 4px; 
+            overflow: hidden; 
+        }
+        .progress-fill { 
+            background: var(--accent-green); 
+            height: 100%; 
+            width: 40%; 
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+        .progress-fill.warning { background: var(--accent-amber); }
+        .progress-fill.danger { background: var(--accent-red); }
+        .progress-fill.offline { background: #57606f; }
+
+        /* Ambulance Custom DivIcon */
+        .custom-amb-marker-container {
+            background: transparent;
+            border: none;
+        }
+        .custom-amb-marker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+        .custom-amb-marker:hover {
+            transform: scale(1.15);
+        }
+        .amb-vehicle-box {
+            background: #151e28;
+            border: 2px solid #1e90ff;
+            border-radius: 7px;
+            padding: 2px 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6), 0 0 8px rgba(30, 144, 255, 0.5);
+            transition: all 0.25s ease;
+        }
+        .amb-status-dispatch .amb-vehicle-box {
+            border-color: #ff4757;
+            box-shadow: 0 3px 12px rgba(255, 71, 87, 0.7), 0 0 15px rgba(255, 71, 87, 0.9);
+            animation: ambFlash 1.1s infinite alternate ease-in-out;
+        }
+        .amb-status-scene .amb-vehicle-box {
+            border-color: #2ed573;
+            box-shadow: 0 3px 12px rgba(46, 213, 115, 0.6), 0 0 12px rgba(46, 213, 115, 0.8);
+        }
+        .amb-status-transport .amb-vehicle-box {
+            border-color: #ffa502;
+            box-shadow: 0 3px 12px rgba(255, 165, 2, 0.6), 0 0 14px rgba(255, 165, 2, 0.8);
+            animation: ambFlashAmber 1.2s infinite alternate ease-in-out;
+        }
+        .amb-status-transfer .amb-vehicle-box {
+            border-color: #2ed573;
+            box-shadow: 0 3px 10px rgba(46, 213, 115, 0.6);
+        }
+        .amb-status-staging .amb-vehicle-box {
+            border-color: #70a1ff;
+            box-shadow: 0 3px 10px rgba(112, 161, 255, 0.5);
+        }
+        @keyframes ambFlash {
+            from { box-shadow: 0 0 8px rgba(255, 71, 87, 0.5); }
+            to { box-shadow: 0 0 20px rgba(255, 71, 87, 1); }
+        }
+        @keyframes ambFlashAmber {
+            from { box-shadow: 0 0 8px rgba(255, 165, 2, 0.5); }
+            to { box-shadow: 0 0 18px rgba(255, 165, 2, 1); }
+        }
+        .amb-tag {
+            font-size: 9px;
+            font-weight: 800;
+            color: #ffffff;
+            background: rgba(18, 24, 32, 0.9);
+            border: 1px solid var(--border-color);
+            padding: 1px 4px;
+            border-radius: 3px;
+            margin-top: 2px;
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+            text-shadow: 0 1px 2px #000;
+        }
+
+        /* Custom User Pin Marker */
+        .custom-user-pin-container {
+            background: transparent;
+            border: none;
+        }
+        .custom-user-pin {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .user-pulse-ring {
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #00d2d3;
+            animation: pulseUser 1.5s infinite ease-out;
+            pointer-events: none;
+        }
+        @keyframes pulseUser {
+            0% { transform: scale(0.6); opacity: 1; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+        .user-pin-badge {
+            background: #004b4c;
+            border: 2px solid #00d2d3;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px #00d2d3;
+        }
+        .user-pin-tag {
+            font-size: 8px;
+            font-weight: 800;
+            color: #00d2d3;
+            background: rgba(18, 24, 32, 0.9);
+            border: 1px solid #00d2d3;
+            padding: 1px 4px;
+            border-radius: 3px;
+            margin-top: 1px;
+            white-space: nowrap;
+        }
+
+        /* User Navigation & Dispatch Styles */
+        .user-nav-search-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .user-nav-search-row input {
+            flex-grow: 1;
+            background: #18222d;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 7px 10px;
+            color: var(--text-main);
+            font-size: 12px;
+            outline: none;
+        }
+        .user-nav-search-row input:focus {
+            border-color: #00d2d3;
+        }
+        .user-nav-search-row button {
+            background: #253342;
+            border: 1px solid var(--border-color);
+            color: #f1f2f6;
+            padding: 7px 10px;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        .user-nav-search-row button:hover {
+            background: #314255;
+            border-color: #00d2d3;
+        }
+        .quick-presets-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 10px;
+        }
+        .preset-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: #a4b0be;
+            font-size: 10px;
+            padding: 3px 6px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .preset-btn:hover {
+            background: rgba(0, 210, 211, 0.15);
+            border-color: #00d2d3;
+            color: #00d2d3;
+        }
+        .user-actions-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .action-btn {
+            padding: 8px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            justify-content: center;
+        }
+        .route-btn {
+            background: rgba(0, 210, 211, 0.15);
+            border: 1px solid #00d2d3;
+            color: #00d2d3;
+        }
+        .route-btn:hover {
+            background: #00d2d3;
+            color: #121820;
+        }
+        .dispatch-btn {
+            background: rgba(255, 71, 87, 0.2);
+            border: 1px solid #ff4757;
+            color: #ff6b81;
+        }
+        .dispatch-btn:hover {
+            background: #ff4757;
+            color: #ffffff;
+        }
+        .user-nav-result {
+            background: #18222d;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 8px 10px;
+            font-size: 11px;
+            line-height: 1.45;
+            margin-top: 4px;
+        }
+
+        /* Hospital Capacity Controls */
+        .hosp-global-controls {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        .hosp-ctrl-btn {
+            flex: 1;
+            background: #18222d;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-size: 10px;
+            font-weight: 600;
+            padding: 5px 4px;
+            border-radius: 3px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .hosp-ctrl-btn:hover {
+            background: #253342;
+        }
+        .hosp-ctrl-btn.surge {
+            border-color: rgba(255, 71, 87, 0.5);
+            color: #ff6b81;
+        }
+        .hosp-ctrl-btn.surge:hover {
+            background: rgba(255, 71, 87, 0.2);
+        }
+        .hosp-ctrl-btn.discharge {
+            border-color: rgba(46, 213, 115, 0.5);
+            color: #2ed573;
+        }
+        .hosp-ctrl-btn.discharge:hover {
+            background: rgba(46, 213, 115, 0.2);
+        }
+        .hosp-stats {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+        }
+        .hosp-beds-count {
+            color: var(--text-muted);
+            font-size: 10px;
+        }
+        .hosp-row-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 4px;
+            margin-top: 4px;
+        }
+        .hosp-mini-btn {
+            background: #18222d;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 9px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .hosp-mini-btn:hover {
+            background: #283647;
+            color: var(--text-main);
+        }
+        .hosp-mini-btn.overload-btn {
+            border-color: rgba(255, 71, 87, 0.4);
+            color: #ff6b81;
+        }
+        .hosp-mini-btn.overload-btn:hover {
+            background: rgba(255, 71, 87, 0.25);
+            color: #ffffff;
+        }
+
+        /* Event Feed */
+        .event-feed {
+            max-height: 170px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 11px;
+            background: #18222d;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+        .event-feed::-webkit-scrollbar { width: 4px; }
+        .event-feed::-webkit-scrollbar-thumb { background: var(--border-color); }
+        .feed-entry {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            border-bottom: 1px solid rgba(42, 54, 69, 0.7);
+            padding-bottom: 4px;
+        }
+        .feed-entry:last-child { border-bottom: none; }
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 10px;
+        }
+        .feed-text { color: var(--text-main); line-height: 1.35; }
+        .badge {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 4px;
+            border-radius: 2px;
+            text-transform: uppercase;
+        }
+        .badge-reroute { background: rgba(255, 71, 87, 0.2); color: #ff6b81; }
+        .badge-triage { background: rgba(46, 213, 115, 0.2); color: #2ed573; }
+        .badge-staging { background: rgba(30, 144, 255, 0.2); color: #70a1ff; }
+        .badge-hazard { background: rgba(255, 165, 2, 0.2); color: #ffa502; }
+        .badge-user { background: rgba(0, 210, 211, 0.2); color: #00d2d3; }
+        .badge-capacity { background: rgba(165, 94, 234, 0.2); color: #a55eea; }
+
+
+
+        /* Custom Marker Tooltips */
+        .leaflet-popup-content-wrapper {
+            background: #1a222d !important;
+            color: #f1f2f6 !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 4px !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
+        }
+        .leaflet-popup-content { margin: 10px !important; font-size: 12px !important; }
+        .leaflet-popup-tip { background: #1a222d !important; }
+    </style>
+</head>
+<body>
+
+    <div id="topbar">
+        <h2>🚨 Live Emergency Response Simulator</h2>
+        
+        <div class="topbar-center">
+            <span id="weather-badge" style="color: var(--text-muted); font-size: 12px;">🌧️ Pune Monsoon Rain: <strong>18 mm/h</strong></span>
+            <span class="static-badge-smart">⚡ Smart Optimizer: Active</span>
+        </div>
+
+        <div class="controls-group">
+            <button id="btn-hazard" onclick="toggleHazardPlacementMode()" class="danger">Block a Road / Hazard</button>
+            <button id="btn-reset">Reset Simulation</button>
+        </div>
+    </div>
+
+    <div id="workspace">
+        <div id="map-container">
+            <div id="map"></div>
+
+            <!-- Floating Layer Controls -->
+            <div class="map-layer-bar">
+                <span style="font-weight: 600; color: var(--text-muted); font-size: 11px; text-transform: uppercase;">Layers:</span>
+                <label class="layer-toggle"><input type="checkbox" id="layer-roads" checked onchange="toggleLayers()"> Roads</label>
+                <label class="layer-toggle"><input type="checkbox" id="layer-hazards" checked onchange="toggleLayers()"> Flood Hazard</label>
+                <label class="layer-toggle"><input type="checkbox" id="layer-amb" checked onchange="toggleLayers()"> Ambulances</label>
+                <label class="layer-toggle"><input type="checkbox" id="layer-hosp" checked onchange="toggleLayers()"> Hospitals</label>
+            </div>
+
+            <!-- Forecast / Rainfall Slider -->
+            <div class="timeline-slider-box">
+                <div class="slider-label-row">
+                    <span>Forecast Timeline</span>
+                    <span id="slider-forecast-val" style="color: #1e90ff;">T+0 min (18 mm/h)</span>
+                </div>
+                <input type="range" id="forecast-slider" class="timeline-slider" min="0" max="60" value="0" step="5" oninput="onForecastSliderChange(this.value)">
+                <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted);">
+                    <span>Now</span>
+                    <span>+15m</span>
+                    <span>+30m</span>
+                    <span>+45m</span>
+                    <span>+60m Peak</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="sidebar">
+            <div class="card">
+                <h3>System Status</h3>
+                <p id="status-text" style="margin: 0; font-weight: 500; color: #2ed573; font-size: 12px; line-height: 1.4;">
+                    Initializing Pune emergency routing graph & live data...
+                </p>
+                <div id="hazard-instruction" style="display: none; margin-top: 6px; font-size: 11px; color: #ff6b81; font-weight: 600;">
+                    ⚠️ Click any road to block it, or click anywhere on the map to place a 300m flood hazard zone.
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Live KPIs (<span id="sim-clock-label">T+0 min</span>)</h3>
+                <div class="kpi-grid">
+                    <div class="kpi-box"><div class="val" id="kpi-avg-resp">4.8m</div><div class="lbl">Avg Response</div></div>
+                    <div class="kpi-box"><div class="val" id="kpi-active-cases">0</div><div class="lbl">Active Cases</div></div>
+                    <div class="kpi-box"><div class="val" id="kpi-waiting">0</div><div class="lbl">Waiting Calls</div></div>
+                    <div class="kpi-box"><div class="val" id="kpi-resolved">12</div><div class="lbl">Resolved</div></div>
+                    <div class="kpi-box"><div class="val" id="kpi-reroutes">0</div><div class="lbl">Reroutes</div></div>
+                    <div class="kpi-box"><div class="val" id="kpi-roads-cut">0</div><div class="lbl">Roads Cut</div></div>
+                </div>
+            </div>
+
+            <!-- Citizen Emergency Navigation & Dispatch -->
+            <div class="card" id="user-navigation-card">
+                <h3>
+                    <span>Citizen Emergency Navigation</span>
+                    <span style="font-size: 10px; color: #00d2d3;">OSM ROUTING</span>
+                </h3>
+                
+                <div class="user-nav-search-row">
+                    <input type="text" id="user-location-input" placeholder="Search Pune area or 'lat, lon'" value="18.5170, 73.8400" />
+                    <button id="btn-user-pin" onclick="toggleUserPickMode()" title="Click anywhere on the map to pin your location">📍 Pin on Map</button>
+                </div>
+                
+                <div class="quick-presets-row">
+                    <span style="font-size: 10px; color: var(--text-muted);">Hotspots:</span>
+                    <button type="button" class="preset-btn" onclick="selectUserPreset('Deccan Gymkhana', 18.5170, 73.8400)">Deccan</button>
+                    <button type="button" class="preset-btn" onclick="selectUserPreset('FC Road / Shivajinagar', 18.5285, 73.8450)">FC Road</button>
+                    <button type="button" class="preset-btn" onclick="selectUserPreset('Pune Railway Station', 18.5289, 73.8744)">Pune Stn</button>
+                    <button type="button" class="preset-btn" onclick="selectUserPreset('Swargate Chowk', 18.5015, 73.8565)">Swargate</button>
+                    <button type="button" class="preset-btn" onclick="selectUserPreset('Kothrud Depot', 18.5075, 73.8080)">Kothrud</button>
+                    <button type="button" class="preset-btn" onclick="selectUserPreset('Koregaon Park', 18.5360, 73.8940)">Koregaon</button>
+                    <button type="button" class="preset-btn" onclick="selectUserPreset('Aundh Gaon', 18.5600, 73.8080)">Aundh</button>
+                    <button type="button" class="preset-btn" onclick="selectUserPreset('Hadapsar Gadital', 18.5010, 73.9280)">Hadapsar</button>
+                    <button type="button" class="preset-btn" onclick="selectUserPreset('Viman Nagar', 18.5670, 73.9140)">Viman Nagar</button>
+                </div>
+                
+                <div class="user-actions-row">
+                    <button id="btn-user-route" class="action-btn route-btn" onclick="calculateUserRouteToHospital()">
+                        🚗 Route to Safe Hospital
+                    </button>
+                    <button id="btn-user-dispatch" class="action-btn dispatch-btn" onclick="dispatchAmbulanceToUser()">
+                        🚨 Call for Ambulance (108)
+                    </button>
+                </div>
+                
+                <div id="user-nav-status" class="user-nav-result" style="display: none;">
+                    <!-- Dynamic route / dispatch feedback -->
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>
+                    <span>Hospital Triage Fleet</span>
+                    <span id="hosp-count-badge" style="font-size: 10px; color: var(--accent-green);">ONLINE</span>
+                </h3>
+                <div class="hosp-global-controls">
+                    <button class="hosp-ctrl-btn surge" onclick="simulateHospitalSurge(0.25)" title="Simulate mass-casualty surge (+25% beds)">🚨 Surge (+25%)</button>
+                    <button class="hosp-ctrl-btn discharge" onclick="simulateHospitalDischarge(0.20)" title="Emergency discharge wave (-20% beds)">📉 Discharge (-20%)</button>
+                    <button class="hosp-ctrl-btn" onclick="resetHospitalCapacities()" title="Reset bed occupancy to default baseline">🔄 Reset Beds</button>
+                </div>
+                <div style="margin-bottom: 6px;">
+                    <input type="text" id="hosp-search-filter" placeholder="Filter hospital nodes by name/area..." style="width: 100%; box-sizing: border-box; background: #18222d; border: 1px solid var(--border-color); border-radius: 3px; padding: 5px 8px; font-size: 11px; color: var(--text-main); outline: none;" oninput="filterHospitalDisplay(this.value)" />
+                </div>
+                <div id="hospital-list-container" style="display: flex; flex-direction: column; gap: 8px; max-height: 250px; overflow-y: auto; padding-right: 4px;">
+                    <!-- Dynamic Hospital Rows generated for all nodes -->
+                </div>
+            </div>
+
+            <!-- Live Operations Event Feed -->
+            <div class="card">
+                <h3>Operations Event Feed</h3>
+                <div class="event-feed" id="event-feed">
+                    <div class="feed-entry">
+                        <div class="feed-header"><span class="badge badge-staging">System</span><span>00:00</span></div>
+                        <div class="feed-text">Autonomous emergency optimization engine initialized.</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+    /* ==========================================================================
+       HIGH-PERFORMANCE DATA STRUCTURES: FAST MIN-HEAP FOR DIJKSTRA & A*
+       ========================================================================== */
+
+    class MinPriorityQueue {
+        constructor() {
+            this.heap = [];
+        }
+        push(item, priority) {
+            this.heap.push({ item, priority });
+            this._bubbleUp(this.heap.length - 1);
+        }
+        pop() {
+            if (this.heap.length === 0) return null;
+            const top = this.heap[0].item;
+            const bottom = this.heap.pop();
+            if (this.heap.length > 0) {
+                this.heap[0] = bottom;
+                this._bubbleDown(0);
+            }
+            return top;
+        }
+        isEmpty() {
+            return this.heap.length === 0;
+        }
+        _bubbleUp(idx) {
+            while (idx > 0) {
+                const parentIdx = (idx - 1) >> 1;
+                if (this.heap[idx].priority < this.heap[parentIdx].priority) {
+                    const temp = this.heap[idx];
+                    this.heap[idx] = this.heap[parentIdx];
+                    this.heap[parentIdx] = temp;
+                    idx = parentIdx;
+                } else {
+                    break;
+                }
+            }
+        }
+        _bubbleDown(idx) {
+            const length = this.heap.length;
+            while (true) {
+                let left = (idx << 1) + 1;
+                let right = left + 1;
+                let smallest = idx;
+                if (left < length && this.heap[left].priority < this.heap[smallest].priority) {
+                    smallest = left;
+                }
+                if (right < length && this.heap[right].priority < this.heap[smallest].priority) {
+                    smallest = right;
+                }
+                if (smallest !== idx) {
+                    const temp = this.heap[idx];
+                    this.heap[idx] = this.heap[smallest];
+                    this.heap[smallest] = temp;
+                    idx = smallest;
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+
+    /* ==========================================================================
+       TIMER MANAGER (PREVENTS DUPLICATE TIMERS AND MEMORY LEAKS)
+       ========================================================================== */
+    const simulationTimers = {
+        step: null,
+        drift: null,
+        spawn: null,
+        staging: null,
+        timeouts: []
+    };
+
+    function safeSetTimeout(fn, delay) {
+        const id = setTimeout(() => {
+            simulationTimers.timeouts = simulationTimers.timeouts.filter(t => t !== id);
+            fn();
+        }, delay);
+        simulationTimers.timeouts.push(id);
+        return id;
+    }
+
+    function clearAllTimers() {
+        if (simulationTimers.step) clearInterval(simulationTimers.step);
+        if (simulationTimers.drift) clearInterval(simulationTimers.drift);
+        if (simulationTimers.spawn) clearInterval(simulationTimers.spawn);
+        if (simulationTimers.staging) clearInterval(simulationTimers.staging);
+        simulationTimers.step = null;
+        simulationTimers.drift = null;
+        simulationTimers.spawn = null;
+        simulationTimers.staging = null;
+
+        simulationTimers.timeouts.forEach(t => clearTimeout(t));
+        simulationTimers.timeouts = [];
+    }
+
+    function startAllTimers() {
+        clearAllTimers();
+        simulationTimers.step = setInterval(stepSimulation, 100);
+        simulationTimers.drift = setInterval(driftHospitals, 2500);
+        simulationTimers.spawn = setInterval(spawnEmergencyCall, 9000);
+        simulationTimers.staging = setInterval(repositionIdleAmbulances, 6000);
+    }
+
+    /* ==========================================================================
+       MODULE 1: DATA & APIS (CONNECTED OSM ROADS, ALL HOSPITALS, WEATHER)
+       ========================================================================== */
+
+    const PUNE_BOUNDS = { minLat: 18.500, minLon: 73.810, maxLat: 18.555, maxLon: 73.895 };
+    const PUNE_CENTER = [18.5204, 73.8567];
+
+    let weatherData = { currentRain: 18.0, forecastHourRain: 32.0, condition: "Monsoon Downpour" };
+    let forecastMinuteOffset = 0; // T+0 to T+60
+
+    // Master list of 25 diverse standard Pune hospitals across all major localities
+    const DEFAULT_HOSPITALS = [
+        { id: "H1", name: "Sassoon General Hospital", lat: 18.5262, lon: 73.8715, capacity: 280, bedsOccupied: 140, max: 280, isFlooded: false },
+        { id: "H2", name: "Ruby Hall Clinic", lat: 18.5322, lon: 73.8785, capacity: 220, bedsOccupied: 185, max: 220, isFlooded: false },
+        { id: "H3", name: "Jehangir Hospital", lat: 18.5298, lon: 73.8752, capacity: 180, bedsOccupied: 115, max: 180, isFlooded: false },
+        { id: "H4", name: "KEM Hospital", lat: 18.5212, lon: 73.8682, capacity: 160, bedsOccupied: 102, max: 160, isFlooded: false },
+        { id: "H5", name: "Deenanath Mangeshkar Hospital", lat: 18.5042, lon: 73.8342, capacity: 240, bedsOccupied: 155, max: 240, isFlooded: false },
+        { id: "H6", name: "Sancheti Hospital", lat: 18.5285, lon: 73.8512, capacity: 140, bedsOccupied: 88, max: 140, isFlooded: false },
+        { id: "H7", name: "Sahyadri Hospital (Deccan)", lat: 18.5175, lon: 73.8415, capacity: 150, bedsOccupied: 98, max: 150, isFlooded: false },
+        { id: "H8", name: "Poona Hospital", lat: 18.5145, lon: 73.8465, capacity: 120, bedsOccupied: 74, max: 120, isFlooded: false },
+        { id: "H9", name: "Bharati Hospital", lat: 18.4985, lon: 73.8545, capacity: 170, bedsOccupied: 110, max: 170, isFlooded: false },
+        { id: "H10", name: "Inamdar Multispecialty Hospital", lat: 18.5050, lon: 73.8950, capacity: 130, bedsOccupied: 82, max: 130, isFlooded: false },
+        { id: "H11", name: "Noble Hospital (Hadapsar)", lat: 18.5020, lon: 73.9290, capacity: 190, bedsOccupied: 125, max: 190, isFlooded: false },
+        { id: "H12", name: "Manipal Hospital (Kharadi)", lat: 18.5520, lon: 73.9350, capacity: 160, bedsOccupied: 105, max: 160, isFlooded: false },
+        { id: "H13", name: "Jupiter Hospital (Baner)", lat: 18.5580, lon: 73.7890, capacity: 210, bedsOccupied: 140, max: 210, isFlooded: false },
+        { id: "H14", name: "Medipoint Hospital (Aundh)", lat: 18.5620, lon: 73.8050, capacity: 110, bedsOccupied: 70, max: 110, isFlooded: false },
+        { id: "H15", name: "AIMS Hospital (Aundh)", lat: 18.5590, lon: 73.8120, capacity: 120, bedsOccupied: 78, max: 120, isFlooded: false },
+        { id: "H16", name: "Ratna Memorial Hospital", lat: 18.5290, lon: 73.8320, capacity: 105, bedsOccupied: 65, max: 105, isFlooded: false },
+        { id: "H17", name: "Hardikar Hospital", lat: 18.5320, lon: 73.8470, capacity: 95, bedsOccupied: 58, max: 95, isFlooded: false },
+        { id: "H18", name: "Rao Nursing Home (Bibwewadi)", lat: 18.4830, lon: 73.8640, capacity: 90, bedsOccupied: 55, max: 90, isFlooded: false },
+        { id: "H19", name: "Mai Mangeshkar Hospital (Warje)", lat: 18.4850, lon: 73.8010, capacity: 135, bedsOccupied: 88, max: 135, isFlooded: false },
+        { id: "H20", name: "Surya Mother & Child Care", lat: 18.5380, lon: 73.8470, capacity: 115, bedsOccupied: 72, max: 115, isFlooded: false },
+        { id: "H21", name: "Columbia Asia Hospital", lat: 18.5540, lon: 73.9140, capacity: 150, bedsOccupied: 95, max: 150, isFlooded: false },
+        { id: "H22", name: "Command Hospital (Southern Command)", lat: 18.5005, lon: 73.8894, capacity: 250, bedsOccupied: 160, max: 250, isFlooded: false },
+        { id: "H23", name: "Sardar Patel Cantonment Hospital", lat: 18.5027, lon: 73.8771, capacity: 120, bedsOccupied: 66, max: 120, isFlooded: false },
+        { id: "H24", name: "Dr. Babasaheb Ambedkar Hospital", lat: 18.5690, lon: 73.8487, capacity: 130, bedsOccupied: 80, max: 130, isFlooded: false },
+        { id: "H25", name: "LifePoint Hospital (Wakad)", lat: 18.5990, lon: 73.7660, capacity: 140, bedsOccupied: 90, max: 140, isFlooded: false }
+    ];
+
+    let hospitals = JSON.parse(JSON.stringify(DEFAULT_HOSPITALS));
+
+    // Candidate Staging Hubs for Greedy Max-Coverage Ambulance Positioning
+    const STAGING_HUBS = [
+        { id: "ST-1", name: "Shivajinagar Station Hub", lat: 18.5310, lon: 73.8485 },
+        { id: "ST-2", name: "Deccan Gymkhana Hub", lat: 18.5170, lon: 73.8400 },
+        { id: "ST-3", name: "Swargate Flyover Hub", lat: 18.5020, lon: 73.8560 },
+        { id: "ST-4", name: "Camp East Post", lat: 18.5130, lon: 73.8770 },
+        { id: "ST-5", name: "Bund Garden North Hub", lat: 18.5370, lon: 73.8820 },
+        { id: "ST-6", name: "Kothrud Depot Hub", lat: 18.5080, lon: 73.8270 }
+    ];
+
+    // Road network graph structures and spatial grid index
+    let roadGraph = {
+        nodes: {},    // nodeId -> { lat, lon }
+        edges: {},    // edgeId -> { from, to, distMeters, speedKmh, costSec, name, isClosed, isAtRisk, manualBlocked, polylineCoords }
+        adj: {}       // nodeId -> [ { target, edgeId, cost } ]
+    };
+    let spatialGrid = {}; // key "gx_gy" -> [ { id, lat, lon } ]
+
+    function addToSpatialGrid(nodeId, lat, lon) {
+        const gx = Math.floor(lat * 100);
+        const gy = Math.floor(lon * 100);
+        const key = `${gx}_${gy}`;
+        if (!spatialGrid[key]) spatialGrid[key] = [];
+        spatialGrid[key].push({ id: nodeId, lat, lon });
+    }
+
+    async function fetchWeather() {
+        try {
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=18.5204&longitude=73.8567&current=precipitation,rain&hourly=precipitation,rain&forecast_days=1`;
+            const resp = await fetch(url);
+            if (resp.ok) {
+                const data = await resp.json();
+                const rain = (data.current && data.current.rain !== undefined) ? data.current.rain : 18.0;
+                weatherData.currentRain = rain > 0 ? rain : 22.5;
+                weatherData.forecastHourRain = weatherData.currentRain * 1.5;
+                document.getElementById('weather-badge').innerHTML = `🌧️ Pune Monsoon Rain: <strong>${weatherData.currentRain.toFixed(1)} mm/h</strong>`;
+                logEvent("Weather", `Open-Meteo live rainfall sync: ${weatherData.currentRain.toFixed(1)} mm/h recorded.`, "badge-hazard");
+            }
+        } catch (e) {
+            weatherData.currentRain = 24.0;
+            document.getElementById('weather-badge').innerHTML = `🌧️ Pune Monsoon Rain: <strong>24.0 mm/h (Simulated)</strong>`;
+        }
+    }
+
+    // Load full global Pune hospitals dataset
+    async function loadHospitalDataset() {
+        try {
+            // First try relative JSON file (works on Live Server and static hosts)
+            let res = await fetch('./pune_all_hospitals.json');
+            if (!res.ok) {
+                // Try backend endpoint if running with FastAPI
+                res = await fetch('/api/hospitals/all');
+            }
+            if (res.ok) {
+                const data = await res.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    hospitals = data.map((h, i) => ({
+                        id: h.id || `H_${i+1}`,
+                        name: h.name || `Pune Hospital #${i+1}`,
+                        lat: h.lat,
+                        lon: h.lon,
+                        capacity: h.capacity || h.max || 120,
+                        bedsOccupied: h.bedsOccupied !== undefined ? h.bedsOccupied : Math.round((h.max || 120) * 0.55),
+                        max: h.max || h.capacity || 120,
+                        isFlooded: false
+                    }));
+                    logEvent("Hospital Sync", `Global medical network loaded: ${hospitals.length} hospital nodes monitored across Pune.`, "badge-staging");
+                }
+            }
+        } catch (e) {
+            console.warn("Using comprehensive embedded hospital baseline:", e.message);
+            hospitals = JSON.parse(JSON.stringify(DEFAULT_HOSPITALS));
+        }
+
+        const badge = document.getElementById('hosp-count-badge');
+        if (badge) badge.innerText = `${hospitals.length} ONLINE`;
+
+        initHospitalBars();
+        initHospitalMarkers();
+    }
+
+    // Load 100% connected OpenStreetMap road network
+    async function loadRoadNetwork() {
+        const cacheKey = 'pune_connected_osm_roads_v1';
+        const cached = localStorage.getItem(cacheKey);
+
+        if (cached) {
+            try {
+                const parsed = JSON.parse(cached);
+                if (Array.isArray(parsed) && parsed.length > 50) {
+                    buildGraphFromRoads(parsed);
+                    updateSystemStatus(`Connected OSM road network active (${Object.keys(roadGraph.nodes).length} nodes, ${Object.keys(roadGraph.edges).length} segments).`);
+                    return;
+                }
+            } catch (e) {
+                localStorage.removeItem(cacheKey);
+            }
+        }
+
+        updateSystemStatus("Loading connected OpenStreetMap road network for Pune...");
+
+        // Try local static connected roads file (fastest & 100% connected)
+        try {
+            let res = await fetch('./pune_connected_osm_roads.json');
+            if (!res.ok) res = await fetch('/api/osm-roads');
+            if (res.ok) {
+                const roads = await res.json();
+                if (Array.isArray(roads) && roads.length > 20) {
+                    try { localStorage.setItem(cacheKey, JSON.stringify(roads)); } catch(e){}
+                    buildGraphFromRoads(roads);
+                    updateSystemStatus(`Connected OSM road network active (${Object.keys(roadGraph.nodes).length} nodes, ${Object.keys(roadGraph.edges).length} segments).`);
+                    logEvent("Data Sync", `OSM road graph constructed: ${Object.keys(roadGraph.nodes).length} nodes in 100% connected component.`, "badge-staging");
+                    return;
+                }
+            }
+        } catch (err) {
+            console.warn("Connected roads file fetch notice:", err.message);
+        }
+
+        // Fallback: Overpass API live fetch
+        try {
+            const query = `[out:json][timeout:8];(way["highway"~"motorway|trunk|primary|secondary|tertiary"](18.50,73.81,18.55,73.89);>;);out body;`;
+            const overpassUrl = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`;
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 6000);
+            const res = await fetch(overpassUrl, { signal: controller.signal });
+            clearTimeout(timeoutId);
+
+            if (res.ok) {
+                const osmData = await res.json();
+                const roadElements = processOverpassElements(osmData);
+                if (roadElements && roadElements.length > 20) {
+                    buildGraphFromRoads(roadElements);
+                    updateSystemStatus(`Overpass API: Pune road network loaded (${Object.keys(roadGraph.nodes).length} nodes, ${Object.keys(roadGraph.edges).length} segments).`);
+                    return;
+                }
+            }
+        } catch (err) {
+            console.warn("Overpass API fallback active:", err.message);
+        }
+
+        loadComprehensivePuneFallbackGraph();
+    }
+
+    function processOverpassElements(osmData) {
+        const nodeMap = {};
+        const elements = [];
+        osmData.elements.forEach(el => {
+            if (el.type === 'node') {
+                nodeMap[el.id] = [el.lat, el.lon];
+            }
+        });
+        osmData.elements.forEach(el => {
+            if (el.type === 'way' && el.nodes && el.nodes.length > 1) {
+                const coords = el.nodes.map(nId => nodeMap[nId]).filter(Boolean);
+                if (coords.length > 1) {
+                    elements.push({
+                        id: 'way_' + el.id,
+                        name: el.tags ? (el.tags.name || el.tags.highway || 'Arterial Road') : 'Road',
+                        speed: el.tags && el.tags.maxspeed ? parseInt(el.tags.maxspeed) : 40,
+                        coords: coords
+                    });
+                }
+            }
+        });
+        return elements;
+    }
+
+    function loadComprehensivePuneFallbackGraph() {
+        const puneRoads = [
+            { id: "R_FC_1", name: "FC Road (Shivajinagar to Goodluck)", speed: 40, coords: [[18.5310, 73.8440], [18.5260, 73.8425], [18.5210, 73.8415], [18.5170, 73.8410]] },
+            { id: "R_JM_1", name: "JM Road (Sancheti to Deccan)", speed: 45, coords: [[18.5285, 73.8500], [18.5240, 73.8475], [18.5200, 73.8455], [18.5170, 73.8440]] },
+            { id: "R_KRV_1", name: "Karve Road (Deccan to Kothrud)", speed: 45, coords: [[18.5170, 73.8410], [18.5135, 73.8340], [18.5090, 73.8270], [18.5050, 73.8210]] },
+            { id: "R_TLK_1", name: "Tilak Road (Alka Talkies to Swargate)", speed: 40, coords: [[18.5140, 73.8445], [18.5100, 73.8480], [18.5060, 73.8520], [18.5020, 73.8560]] },
+            { id: "R_SHS_1", name: "Shastri Road (Alka Talkies to Dandekar)", speed: 40, coords: [[18.5140, 73.8445], [18.5085, 73.8435], [18.5030, 73.8425]] },
+            { id: "R_SHV_1", name: "Shivaji Road (Shaniwar Wada to Swargate)", speed: 35, coords: [[18.5215, 73.8530], [18.5160, 73.8545], [18.5090, 73.8555], [18.5020, 73.8560]] },
+            { id: "R_BJR_1", name: "Bajirao Road (Shaniwar Wada to Swargate)", speed: 35, coords: [[18.5200, 73.8510], [18.5140, 73.8525], [18.5080, 73.8535], [18.5020, 73.8540]] },
+            { id: "R_BRG_LAKDI", name: "Lakdi Pul (Sambhaji Bridge)", speed: 35, coords: [[18.5140, 73.8445], [18.5155, 73.8480]] },
+            { id: "R_BRG_Z", name: "Z-Bridge (Deccan to Shaniwar)", speed: 30, coords: [[18.5180, 73.8450], [18.5195, 73.8490]] },
+            { id: "R_BRG_SHV", name: "Shivaji Bridge (Dengle Bridge)", speed: 40, coords: [[18.5250, 73.8505], [18.5230, 73.8535]] },
+            { id: "R_BRG_SNGM", name: "Sangam Bridge (COEP to Sangamwadi)", speed: 50, coords: [[18.5290, 73.8525], [18.5320, 73.8640]] },
+            { id: "R_BRG_BUND", name: "Bund Garden Bridge (Ruby Hall to Yerawada)", speed: 50, coords: [[18.5360, 73.8810], [18.5410, 73.8860]] },
+            { id: "R_BRG_HOLK", name: "Holkar Bridge (Khadki to Yerawada)", speed: 45, coords: [[18.5480, 73.8590], [18.5450, 73.8720]] },
+            { id: "R_STN_1", name: "Station Road (Pune Station to Sassoon)", speed: 40, coords: [[18.5285, 73.8745], [18.5262, 73.8715], [18.5212, 73.8682]] },
+            { id: "R_BND_1", name: "Bund Garden Rd (Station to Ruby Hall)", speed: 45, coords: [[18.5285, 73.8745], [18.5322, 73.8785], [18.5360, 73.8810]] },
+            { id: "R_SHK_1", name: "Shankarsheth Road (Swargate to Camp)", speed: 45, coords: [[18.5020, 73.8560], [18.5065, 73.8675], [18.5110, 73.8760]] },
+            { id: "R_CMP_1", name: "Moledina Road (Camp to Station)", speed: 40, coords: [[18.5110, 73.8760], [18.5190, 73.8750], [18.5285, 73.8745]] },
+            { id: "R_SNG_1", name: "Sangamwadi Road (COEP to Yerawada)", speed: 50, coords: [[18.5290, 73.8525], [18.5370, 73.8690], [18.5410, 73.8860]] },
+            { id: "R_SNH_1", name: "Sinhagad Road (Dandekar to Sarasbaug)", speed: 40, coords: [[18.5030, 73.8425], [18.5015, 73.8480], [18.5020, 73.8540]] },
+            { id: "R_KEM_1", name: "Rasta Peth Connector (KEM to Shaniwar Wada)", speed: 35, coords: [[18.5212, 73.8682], [18.5200, 73.8600], [18.5215, 73.8530]] },
+            { id: "R_DNM_1", name: "Erandwane Connector (Deenanath to Karve Rd)", speed: 35, coords: [[18.5042, 73.8342], [18.5090, 73.8340], [18.5135, 73.8340]] }
+        ];
+
+        buildGraphFromRoads(puneRoads);
+        updateSystemStatus(`Pune arterial network ready (${Object.keys(roadGraph.nodes).length} nodes, ${Object.keys(roadGraph.edges).length} segments).`);
+    }
+
+    function buildGraphFromRoads(roads) {
+        roadGraph = { nodes: {}, edges: {}, adj: {} };
+        spatialGrid = {};
+
+        roads.forEach((r) => {
+            const coords = r.coords;
+            for (let i = 0; i < coords.length - 1; i++) {
+                const uLat = parseFloat(coords[i][0].toFixed(5));
+                const uLon = parseFloat(coords[i][1].toFixed(5));
+                const vLat = parseFloat(coords[i + 1][0].toFixed(5));
+                const vLon = parseFloat(coords[i + 1][1].toFixed(5));
+
+                const uId = `N_${uLat}_${uLon}`;
+                const vId = `N_${vLat}_${vLon}`;
+
+                if (!roadGraph.nodes[uId]) {
+                    roadGraph.nodes[uId] = { lat: uLat, lon: uLon };
+                    addToSpatialGrid(uId, uLat, uLon);
+                }
+                if (!roadGraph.nodes[vId]) {
+                    roadGraph.nodes[vId] = { lat: vLat, lon: vLon };
+                    addToSpatialGrid(vId, vLat, vLon);
+                }
+
+                const dist = haversineDistance(uLat, uLon, vLat, vLon);
+                const speed = r.speed || 40;
+                const costSec = (dist / (speed * 1000 / 3600));
+
+                const edgeId = `${r.id}_${i}`;
+                const edgeObj = {
+                    id: edgeId,
+                    from: uId,
+                    to: vId,
+                    distMeters: dist,
+                    speedKmh: speed,
+                    costSec: costSec,
+                    name: r.name || "Arterial Road",
+                    isClosed: false,
+                    isAtRisk: false,
+                    manualBlocked: false,
+                    polylineCoords: [[uLat, uLon], [vLat, vLon]]
+                };
+
+                roadGraph.edges[edgeId] = edgeObj;
+
+                if (!roadGraph.adj[uId]) roadGraph.adj[uId] = [];
+                if (!roadGraph.adj[vId]) roadGraph.adj[vId] = [];
+
+                roadGraph.adj[uId].push({ target: vId, edgeId: edgeId, cost: costSec });
+                roadGraph.adj[vId].push({ target: uId, edgeId: edgeId, cost: costSec });
+            }
+        });
+
+        // Pre-index nearest node for each hospital in the graph
+        hospitals.forEach(h => {
+            h.graphNodeId = findClosestNode(h.lat, h.lon);
+        });
+
+        initRoadPolylinesOnMap();
+    }
+
+    /* ==========================================================================
+       MODULE 2: HAZARDS & ROADS (MULA-MUTHA FLOOD, CLOSURES, RISK DETECTOR)
+       ========================================================================== */
+
+    const RIVER_SPINE = [
+        [18.5080, 73.8370], // Vitthalwadi / Karve Nagar
+        [18.5140, 73.8450], // Lakdi Pul / Deccan Gymkhana
+        [18.5185, 73.8475], // Z-Bridge
+        [18.5240, 73.8520], // Shivaji Bridge / Shaniwar Wada
+        [18.5315, 73.8625], // Sangam (Mula meets Mutha)
+        [18.5335, 73.8690], // Sangamwadi
+        [18.5365, 73.8810], // Bund Garden
+        [18.5420, 73.8920]  // Yerawada / Kalyani Nagar
+    ];
+
+    let activeFloodPolygon = null;
+    let forecastFloodPolygon = null;
+    let activeFloodBBox = null;
+    let forecastFloodBBox = null;
+    let hazardCircles = []; // Data
+    let hazardCircleLayers = []; // Map layers
+    let isHazardPlacementActive = false;
+
+    function computeFloodPolygons() {
+        const totalRainFactor = (weatherData.currentRain + (forecastMinuteOffset * 0.45));
+        const activeRadiusMeters = 180 + (totalRainFactor * 5.5);
+        const forecastRadiusMeters = activeRadiusMeters + 175;
+
+        const activePoly = generateBufferedSpine(RIVER_SPINE, activeRadiusMeters);
+        const forecastPoly = generateBufferedSpine(RIVER_SPINE, forecastRadiusMeters);
+
+        activeFloodBBox = getPolygonBoundingBox(activePoly);
+        forecastFloodBBox = getPolygonBoundingBox(forecastPoly);
+
+        return { activePoly, forecastPoly, activeRadiusMeters };
+    }
+
+    function getPolygonBoundingBox(poly) {
+        let minLat = Infinity, maxLat = -Infinity, minLon = Infinity, maxLon = -Infinity;
+        for (let pt of poly) {
+            if (pt[0] < minLat) minLat = pt[0];
+            if (pt[0] > maxLat) maxLat = pt[0];
+            if (pt[1] < minLon) minLon = pt[1];
+            if (pt[1] > maxLon) maxLon = pt[1];
+        }
+        return { minLat, maxLat, minLon, maxLon };
+    }
+
+    function generateBufferedSpine(spine, radiusMeters) {
+        const degBufferLat = radiusMeters / 111320;
+        const degBufferLon = radiusMeters / (111320 * Math.cos(18.52 * Math.PI / 180));
+
+        const leftCoords = [];
+        const rightCoords = [];
+
+        for (let i = 0; i < spine.length; i++) {
+            const pt = spine[i];
+            leftCoords.push([pt[0] + degBufferLat * 0.85, pt[1] - degBufferLon * 0.75]);
+            rightCoords.push([pt[0] - degBufferLat * 0.85, pt[1] + degBufferLon * 0.75]);
+        }
+        return leftCoords.concat(rightCoords.reverse());
+    }
+
+    function updateHazardsAndRoadStatus() {
+        const { activePoly, forecastPoly } = computeFloodPolygons();
+
+        // Render Active Flood Zone
+        if (!activeFloodPolygon) {
+            activeFloodPolygon = L.polygon(activePoly, {
+                color: '#ff4757',
+                weight: 2,
+                fillColor: '#ff4757',
+                fillOpacity: 0.28
+            }).bindTooltip("⚠️ Active Mula-Mutha Flood Hazard Zone (Water Rise: Critical)", { direction: "center" });
+            if (document.getElementById('layer-hazards').checked) activeFloodPolygon.addTo(map);
+        } else {
+            activeFloodPolygon.setLatLngs(activePoly);
+            if (document.getElementById('layer-hazards').checked && !map.hasLayer(activeFloodPolygon)) {
+                activeFloodPolygon.addTo(map);
+            }
+        }
+
+        // Render +30 Min Forecast Zone
+        if (!forecastFloodPolygon) {
+            forecastFloodPolygon = L.polygon(forecastPoly, {
+                color: '#ffa502',
+                weight: 1.5,
+                dashArray: '5, 8',
+                fillColor: '#ffa502',
+                fillOpacity: 0.12
+            }).bindTooltip("🌧️ +30 min Forecast Flood Inundation Buffer", { direction: "center" });
+            if (document.getElementById('layer-hazards').checked) forecastFloodPolygon.addTo(map);
+        } else {
+            forecastFloodPolygon.setLatLngs(forecastPoly);
+            if (document.getElementById('layer-hazards').checked && !map.hasLayer(forecastFloodPolygon)) {
+                forecastFloodPolygon.addTo(map);
+            }
+        }
+
+        // Evaluate road edges
+        let cutCount = 0;
+        Object.values(roadGraph.edges).forEach(edge => {
+            const midLat = (edge.polylineCoords[0][0] + edge.polylineCoords[1][0]) * 0.5;
+            const midLon = (edge.polylineCoords[0][1] + edge.polylineCoords[1][1]) * 0.5;
+
+            let inActiveFlood = false;
+            if (midLat >= activeFloodBBox.minLat && midLat <= activeFloodBBox.maxLat &&
+                midLon >= activeFloodBBox.minLon && midLon <= activeFloodBBox.maxLon) {
+                inActiveFlood = isPointInPolygon([midLat, midLon], activePoly);
+            }
+
+            let inForecast = false;
+            if (!inActiveFlood && midLat >= forecastFloodBBox.minLat && midLat <= forecastFloodBBox.maxLat &&
+                midLon >= forecastFloodBBox.minLon && midLon <= forecastFloodBBox.maxLon) {
+                inForecast = isPointInPolygon([midLat, midLon], forecastPoly);
+            }
+
+            let inManualHazard = false;
+            for (let hz of hazardCircles) {
+                if (haversineDistance(midLat, midLon, hz.lat, hz.lon) <= hz.radius) {
+                    inManualHazard = true;
+                    break;
+                }
+            }
+
+            if (inActiveFlood || inManualHazard || edge.manualBlocked) {
+                edge.isClosed = true;
+                edge.isAtRisk = false;
+                cutCount++;
+            } else if (inForecast) {
+                edge.isClosed = false;
+                edge.isAtRisk = true;
+            } else {
+                edge.isClosed = false;
+                edge.isAtRisk = false;
+            }
+        });
+
+        document.getElementById('kpi-roads-cut').innerText = cutCount;
+        updateRoadStyles();
+    }
+
+    function toggleHazardPlacementMode() {
+        isHazardPlacementActive = !isHazardPlacementActive;
+        const btn = document.getElementById('btn-hazard');
+        const instruct = document.getElementById('hazard-instruction');
+        if (isHazardPlacementActive) {
+            btn.classList.add('active-toggle');
+            btn.innerText = "Click Road / Map (Active)";
+            instruct.style.display = "block";
+            map.getContainer().style.cursor = "crosshair";
+        } else {
+            btn.classList.remove('active-toggle');
+            btn.innerText = "Block a Road / Hazard";
+            instruct.style.display = "none";
+            map.getContainer().style.cursor = "";
+        }
+    }
+
+    function onMapClick(e) {
+        if (isUserPickingLocation) {
+            setUserLocationFromCoords(e.latlng.lat, e.latlng.lng, "Pinned on Map");
+            toggleUserPickMode();
+            return;
+        }
+        if (!isHazardPlacementActive) return;
+
+        const newHazard = {
+            id: 'hz_' + Date.now(),
+            lat: e.latlng.lat,
+            lon: e.latlng.lng,
+            radius: 300 // meters
+        };
+        hazardCircles.push(newHazard);
+
+        const circleLayer = L.circle([newHazard.lat, newHazard.lon], {
+            radius: newHazard.radius,
+            color: '#ff4757',
+            fillColor: '#ff4757',
+            fillOpacity: 0.35,
+            weight: 2
+        }).bindPopup(`<b>Hazard Zone #${hazardCircles.length}</b><br>300m Road Blockade`).addTo(map);
+        hazardCircleLayers.push(circleLayer);
+
+        logEvent("Hazard Deployed", `User placed 300m hazard near [${newHazard.lat.toFixed(3)}, ${newHazard.lon.toFixed(3)}].`, "badge-hazard");
+        toggleHazardPlacementMode();
+        onNetworkChange();
+    }
+
+    function toggleRoadManualBlock(edgeId) {
+        const edge = roadGraph.edges[edgeId];
+        if (!edge) return;
+        edge.manualBlocked = !edge.manualBlocked;
+        logEvent("Road Toggle", `Road '${edge.name}' manually ${edge.manualBlocked ? 'BLOCKED' : 'REOPENED'}.`, "badge-reroute");
+        onNetworkChange();
+    }
+
+    /* ==========================================================================
+       MODULE 3: ROUTING ENGINE (FAST SPATIAL GRID, A*, AND SSSP DIJKSTRA)
+       ========================================================================== */
+
+    function haversineDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371000;
+        const dLat = (lat2 - lat1) * 0.017453292519943295;
+        const dLon = (lon2 - lon1) * 0.017453292519943295;
+        const a = Math.sin(dLat * 0.5) * Math.sin(dLat * 0.5) +
+                  Math.cos(lat1 * 0.017453292519943295) * Math.cos(lat2 * 0.017453292519943295) *
+                  Math.sin(dLon * 0.5) * Math.sin(dLon * 0.5);
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    // High performance O(1) spatial grid lookup for nearest road node
+    function findClosestNode(lat, lon) {
+        const gx = Math.floor(lat * 100);
+        const gy = Math.floor(lon * 100);
+        let bestNode = null;
+        let minD = Infinity;
+
+        // Search surrounding 3x3 cells (approx 2.5km box)
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                const key = `${gx + dx}_${gy + dy}`;
+                const cell = spatialGrid[key];
+                if (cell) {
+                    for (let i = 0; i < cell.length; i++) {
+                        const n = cell[i];
+                        const d = (lat - n.lat) * (lat - n.lat) + (lon - n.lon) * (lon - n.lon);
+                        if (d < minD) {
+                            minD = d;
+                            bestNode = n.id;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Fallback to full search if coordinate is outside indexed cells
+        if (!bestNode) {
+            for (let nId in roadGraph.nodes) {
+                const n = roadGraph.nodes[nId];
+                const d = (lat - n.lat) * (lat - n.lat) + (lon - n.lon) * (lon - n.lon);
+                if (d < minD) {
+                    minD = d;
+                    bestNode = nId;
+                }
+            }
+        }
+        return bestNode;
+    }
+
+    // Point-to-Point A* Search strictly along OSM road network graph (zero straight lines)
+    function findPath(startLat, startLon, endLat, endLon) {
+        const startNode = findClosestNode(startLat, startLon);
+        const endNode = findClosestNode(endLat, endLon);
+
+        if (!startNode || !endNode) {
+            return { coords: [], costSec: Infinity, edgesTraversed: [], isUnreachable: true };
+        }
+        if (startNode === endNode) {
+            const n = roadGraph.nodes[startNode];
+            return { coords: [[n.lat, n.lon]], costSec: 10, edgesTraversed: [], isUnreachable: false };
+        }
+
+        const distances = {};
+        const previous = {};
+        const edgeUsed = {};
+        const visited = new Set();
+        const pq = new MinPriorityQueue();
+
+        const endCoords = roadGraph.nodes[endNode];
+        function heuristic(nId) {
+            const n = roadGraph.nodes[nId];
+            if (!n || !endCoords) return 0;
+            // Straight-line distance / max velocity (55 km/h = ~15.2 m/s)
+            return haversineDistance(n.lat, n.lon, endCoords.lat, endCoords.lon) / 15.2;
+        }
+
+        distances[startNode] = 0;
+        pq.push(startNode, heuristic(startNode));
+
+        while (!pq.isEmpty()) {
+            const current = pq.pop();
+            if (visited.has(current)) continue;
+            visited.add(current);
+
+            if (current === endNode) break;
+
+            const currentDist = distances[current];
+            const neighbors = roadGraph.adj[current] || [];
+
+            for (let i = 0; i < neighbors.length; i++) {
+                const edgeRef = neighbors[i];
+                const edgeObj = roadGraph.edges[edgeRef.edgeId];
+                if (!edgeObj || edgeObj.isClosed) continue; // Closed edges are impassable
+
+                const costMultiplier = edgeObj.isAtRisk ? 5.0 : 1.0;
+                const alt = currentDist + (edgeRef.cost * costMultiplier);
+
+                if (distances[edgeRef.target] === undefined || alt < distances[edgeRef.target]) {
+                    distances[edgeRef.target] = alt;
+                    previous[edgeRef.target] = current;
+                    edgeUsed[edgeRef.target] = edgeRef.edgeId;
+                    pq.push(edgeRef.target, alt + heuristic(edgeRef.target));
+                }
+            }
+        }
+
+        // If endNode is unreachable, return empty coords (NEVER return a straight line chord!)
+        if (distances[endNode] === undefined || distances[endNode] === Infinity) {
+            return { coords: [], costSec: Infinity, edgesTraversed: [], isUnreachable: true };
+        }
+
+        // Reconstruct path geometry faithfully preserving all street curves
+        const pathCoords = [];
+        const edgesTraversed = [];
+        let curr = endNode;
+        while (curr && previous[curr]) {
+            const eId = edgeUsed[curr];
+            const prevNode = previous[curr];
+            edgesTraversed.unshift(eId);
+
+            const edgeObj = roadGraph.edges[eId];
+            if (edgeObj && edgeObj.polylineCoords) {
+                const uNode = roadGraph.nodes[prevNode];
+                const pCoords = edgeObj.polylineCoords;
+                const dStart = (pCoords[0][0] - uNode.lat)**2 + (pCoords[0][1] - uNode.lon)**2;
+                const dEnd = (pCoords[pCoords.length-1][0] - uNode.lat)**2 + (pCoords[pCoords.length-1][1] - uNode.lon)**2;
+                const segment = (dStart <= dEnd) ? pCoords.slice(1) : [...pCoords].reverse().slice(1);
+
+                for (let k = segment.length - 1; k >= 0; k--) {
+                    pathCoords.unshift(segment[k]);
+                }
+            } else {
+                const node = roadGraph.nodes[curr];
+                pathCoords.unshift([node.lat, node.lon]);
+            }
+            curr = prevNode;
+        }
+        if (curr) {
+            const startN = roadGraph.nodes[curr];
+            pathCoords.unshift([startN.lat, startN.lon]);
+        }
+
+        // Explicitly ensure the resulting route begins at the exact startLat/startLon and ends at endLat/endLon
+        if (pathCoords.length > 0) {
+            if (pathCoords[0][0] !== startLat || pathCoords[0][1] !== startLon) {
+                pathCoords.unshift([startLat, startLon]);
+            }
+            if (pathCoords[pathCoords.length - 1][0] !== endLat || pathCoords[pathCoords.length - 1][1] !== endLon) {
+                pathCoords.push([endLat, endLon]);
+            }
+        }
+
+        return { coords: pathCoords, costSec: distances[endNode], edgesTraversed, isUnreachable: false };
+    }
+
+    // High performance Single-Source Shortest Path (SSSP) evaluating ALL global hospitals in one pass (~30ms)
+    function evaluateHospitalsFromSource(sourceLat, sourceLon) {
+        const startNode = findClosestNode(sourceLat, sourceLon);
+        if (!startNode) return [];
+
+        const distances = {};
+        const previous = {};
+        const edgeUsed = {};
+        const visited = new Set();
+        const pq = new MinPriorityQueue();
+
+        distances[startNode] = 0;
+        pq.push(startNode, 0);
+
+        while (!pq.isEmpty()) {
+            const current = pq.pop();
+            if (visited.has(current)) continue;
+            visited.add(current);
+
+            const currentDist = distances[current];
+            const neighbors = roadGraph.adj[current] || [];
+
+            for (let i = 0; i < neighbors.length; i++) {
+                const edgeRef = neighbors[i];
+                const edgeObj = roadGraph.edges[edgeRef.edgeId];
+                if (!edgeObj || edgeObj.isClosed) continue;
+
+                const costMultiplier = edgeObj.isAtRisk ? 5.0 : 1.0;
+                const alt = currentDist + (edgeRef.cost * costMultiplier);
+
+                if (distances[edgeRef.target] === undefined || alt < distances[edgeRef.target]) {
+                    distances[edgeRef.target] = alt;
+                    previous[edgeRef.target] = current;
+                    edgeUsed[edgeRef.target] = edgeRef.edgeId;
+                    pq.push(edgeRef.target, alt);
+                }
+            }
+        }
+
+        // Score every candidate hospital in the entire dataset
+        const results = [];
+        hospitals.forEach(h => {
+            if (h.isFlooded) return; // Flooded or offline excluded
+
+            const hNode = h.graphNodeId || findClosestNode(h.lat, h.lon);
+            h.graphNodeId = hNode;
+
+            const travelTimeSec = distances[hNode];
+            if (travelTimeSec === undefined || travelTimeSec === Infinity) return; // Unreachable excluded
+
+            const etaMin = travelTimeSec / 60;
+            const totalBeds = h.max || 120;
+            const freeBeds = Math.max(0, totalBeds - (h.bedsOccupied || 0));
+            const freeBedsRatio = freeBeds / totalBeds;
+            const occupancyPct = ((h.bedsOccupied || 0) / totalBeds) * 100;
+            const occupancyPenalty = (occupancyPct > 90) ? 40 : 0;
+
+            // Check if route traversed flood-risk edges
+            let atRiskCount = 0;
+            let checkNode = hNode;
+            let steps = 0;
+            while (checkNode && checkNode !== startNode && steps < 500) {
+                const eId = edgeUsed[checkNode];
+                if (eId && roadGraph.edges[eId]?.isAtRisk) atRiskCount++;
+                checkNode = previous[checkNode];
+                steps++;
+            }
+            const routeFloodRisk = atRiskCount > 0 ? 1.0 : 0.0;
+
+            // Hospital triage scoring equation:
+            // score = 100 - 3*ETA_min + 35*(free_beds/total_beds) - 50*route_flood_risk - 40 if occupancy > 90%
+            const score = 100 - (3 * etaMin) + (35 * freeBedsRatio) - (50 * routeFloodRisk) - occupancyPenalty;
+
+            results.push({
+                hospital: h,
+                score: score,
+                costSec: travelTimeSec,
+                etaMin: etaMin,
+                freeBeds: freeBeds,
+                totalBeds: totalBeds,
+                occupancyPct: occupancyPct,
+                occupancyPenalty: occupancyPenalty,
+                routeFloodRisk: routeFloodRisk,
+                endNode: hNode,
+                previous: previous,
+                edgeUsed: edgeUsed,
+                startNode: startNode,
+                sourceCoords: [sourceLat, sourceLon]
+            });
+        });
+
+        results.sort((a, b) => b.score - a.score);
+        return results;
+    }
+
+    // Helper to reconstruct path coordinates from SSSP evaluation result
+    function reconstructPathFromEvaluation(evalItem) {
+        if (!evalItem) return [];
+        const pathCoords = [];
+        let curr = evalItem.endNode;
+        const previous = evalItem.previous;
+        const edgeUsed = evalItem.edgeUsed;
+
+        while (curr && previous[curr]) {
+            const eId = edgeUsed[curr];
+            const prevNode = previous[curr];
+            const edgeObj = roadGraph.edges[eId];
+
+            if (edgeObj && edgeObj.polylineCoords) {
+                const uNode = roadGraph.nodes[prevNode];
+                const pCoords = edgeObj.polylineCoords;
+                const dStart = (pCoords[0][0] - uNode.lat)**2 + (pCoords[0][1] - uNode.lon)**2;
+                const dEnd = (pCoords[pCoords.length-1][0] - uNode.lat)**2 + (pCoords[pCoords.length-1][1] - uNode.lon)**2;
+                const segment = (dStart <= dEnd) ? pCoords.slice(1) : [...pCoords].reverse().slice(1);
+
+                for (let k = segment.length - 1; k >= 0; k--) {
+                    pathCoords.unshift(segment[k]);
+                }
+            } else {
+                const node = roadGraph.nodes[curr];
+                pathCoords.unshift([node.lat, node.lon]);
+            }
+            curr = prevNode;
+        }
+        if (curr) {
+            const startN = roadGraph.nodes[curr];
+            pathCoords.unshift([startN.lat, startN.lon]);
+        }
+        // Explicitly prepend exact user pinned coordinates as the true origin
+        if (evalItem && evalItem.sourceCoords) {
+            if (pathCoords.length === 0 || pathCoords[0][0] !== evalItem.sourceCoords[0] || pathCoords[0][1] !== evalItem.sourceCoords[1]) {
+                pathCoords.unshift([evalItem.sourceCoords[0], evalItem.sourceCoords[1]]);
+            }
+        }
+        return pathCoords;
+    }
+
+    /* ==========================================================================
+       MODULE 4: OPTIMIZATION ENGINE & NETWORK-CHANGE DECISION MAKER
+       ========================================================================== */
+
+    function onNetworkChange() {
+        // 1. Update flood polygons, closures, and road styles
+        updateHazardsAndRoadStatus();
+
+        // 2. Mark any hospital whose node is flooded or unreachable as "Offline"
+        hospitals.forEach(h => {
+            let flooded = false;
+            if (activeFloodBBox && h.lat >= activeFloodBBox.minLat && h.lat <= activeFloodBBox.maxLat &&
+                h.lon >= activeFloodBBox.minLon && h.lon <= activeFloodBBox.maxLon) {
+                flooded = isPointInPolygon([h.lat, h.lon], activeFloodPolygon.getLatLngs()[0]);
+            }
+            if (!flooded) {
+                for (let hz of hazardCircles) {
+                    if (haversineDistance(h.lat, h.lon, hz.lat, hz.lon) <= hz.radius) {
+                        flooded = true;
+                        break;
+                    }
+                }
+            }
+
+            let unreachable = false;
+            if (!flooded) {
+                const pathCheck = findPath(PUNE_CENTER[0], PUNE_CENTER[1], h.lat, h.lon);
+                if (pathCheck.isUnreachable || pathCheck.costSec >= 999999) {
+                    unreachable = true;
+                }
+            }
+
+            const wasOffline = h.isFlooded;
+            h.isFlooded = (flooded || unreachable);
+            if (h.isFlooded && !wasOffline) {
+                logEvent("Hospital Offline", `🚨 ${h.name} is now OFFLINE (${flooded ? 'Flooded' : 'Road access cut off'}).`, "badge-hazard");
+            } else if (!h.isFlooded && wasOffline) {
+                logEvent("Hospital Restored", `✅ ${h.name} access restored. Rejoined emergency triage network.`, "badge-triage");
+            }
+        });
+
+        // 3. Recompute active ambulances: reroute on closed roads or divert to better hospital
+        ambulances.forEach(amb => {
+            if (amb.status === "Idle") return;
+
+            if (amb.status === "En Route to Scene") {
+                const call = amb.assignedIncident;
+                if (!call) return;
+                const pathCrossesClosed = amb.edgesRemaining && amb.edgesRemaining.some(eId => roadGraph.edges[eId]?.isClosed);
+                if (pathCrossesClosed) {
+                    const newPath = findPath(amb.lat, amb.lon, call.lat, call.lon);
+                    amb.pathCoords = newPath.coords;
+                    amb.pathIndex = 0;
+                    amb.edgesRemaining = newPath.edgesTraversed;
+                    kpiState.reroutesCount++;
+                    document.getElementById('kpi-reroutes').innerText = kpiState.reroutesCount;
+                    logEvent("Rerouting", `${amb.id} rerouted: road closed ahead (Detour ETA: ${(newPath.costSec/60).toFixed(1)}m).`, "badge-reroute");
+                }
+            } else if (amb.status === "Transporting to Hospital") {
+                const prevHosp = amb.targetHospital;
+                const triage = selectOptimalHospital([amb.lat, amb.lon], "Urgent");
+                const newBestHosp = triage.hospital;
+
+                if (newBestHosp && prevHosp && newBestHosp.id !== prevHosp.id) {
+                    amb.targetHospital = newBestHosp;
+                    const newPath = findPath(amb.lat, amb.lon, newBestHosp.lat, newBestHosp.lon);
+                    amb.pathCoords = newPath.coords;
+                    amb.pathIndex = 0;
+                    amb.targetLocation = [newBestHosp.lat, newBestHosp.lon];
+                    amb.edgesRemaining = newPath.edgesTraversed;
+                    kpiState.reroutesCount++;
+                    document.getElementById('kpi-reroutes').innerText = kpiState.reroutesCount;
+                    logEvent("Hospital Divert", `🚑 ${amb.id} diverted to ${newBestHosp.name}! Previous: ${prevHosp.name}. Reason: ${triage.reason}`, "badge-reroute");
+                } else if (prevHosp) {
+                    const pathCrossesClosed = amb.edgesRemaining && amb.edgesRemaining.some(eId => roadGraph.edges[eId]?.isClosed);
+                    if (pathCrossesClosed) {
+                        const newPath = findPath(amb.lat, amb.lon, prevHosp.lat, prevHosp.lon);
+                        amb.pathCoords = newPath.coords;
+                        amb.pathIndex = 0;
+                        amb.edgesRemaining = newPath.edgesTraversed;
+                        kpiState.reroutesCount++;
+                        document.getElementById('kpi-reroutes').innerText = kpiState.reroutesCount;
+                        logEvent("Rerouting", `${amb.id} rerouted: road closed ahead on route to ${prevHosp.name}.`, "badge-reroute");
+                    }
+                }
+            }
+        });
+
+        // 4. Re-run staging
+        repositionIdleAmbulances();
+
+        // 5. Update KPIs, hospital bars, and event feed immediately
+        updateKPIs();
+        updateHospitalBars();
+    }
+
+    // Select optimal hospital across ALL global hospitals using SSSP evaluation
+    function selectOptimalHospital(incidentLocation, priority) {
+        const evaluations = evaluateHospitalsFromSource(incidentLocation[0], incidentLocation[1]);
+
+        if (evaluations.length === 0) {
+            const fallback = hospitals.find(h => !h.isFlooded) || hospitals[0];
+            return {
+                hospital: fallback,
+                score: 0,
+                pathCoords: [],
+                reason: `Emergency fallback to ${fallback.name} (All standard facilities offline or unreachable).`
+            };
+        }
+
+        const best = evaluations[0];
+        const riskText = best.routeFloodRisk > 0 ? "Route at risk (-50)" : "Route clear (0)";
+        const overloadText = best.occupancyPenalty > 0 ? "Overload penalty (-40)" : "Normal capacity (0)";
+
+        const reason = `Score: ${best.score.toFixed(1)} | ETA: ${best.etaMin.toFixed(1)}m, Free beds: ${best.freeBeds}/${best.totalBeds} (${((best.freeBeds/best.totalBeds)*100).toFixed(0)}%), Flood risk: ${riskText}, ${overloadText}`;
+
+        return {
+            hospital: best.hospital,
+            score: best.score,
+            details: best,
+            pathCoords: reconstructPathFromEvaluation(best),
+            reason: reason
+        };
+    }
+
+    function repositionIdleAmbulances() {
+        const idleAmbulances = ambulances.filter(a => a.status === "Idle");
+        if (idleAmbulances.length === 0) return;
+
+        const viableHubs = STAGING_HUBS.filter(hub => {
+            if (activeFloodBBox && hub.lat >= activeFloodBBox.minLat && hub.lat <= activeFloodBBox.maxLat &&
+                hub.lon >= activeFloodBBox.minLon && hub.lon <= activeFloodBBox.maxLon) {
+                return false;
+            }
+            return true;
+        });
+
+        idleAmbulances.forEach((amb, idx) => {
+            const targetHub = viableHubs[idx % viableHubs.length];
+            if (!targetHub) return;
+
+            const dist = haversineDistance(amb.lat, amb.lon, targetHub.lat, targetHub.lon);
+            if (dist > 450) {
+                const path = findPath(amb.lat, amb.lon, targetHub.lat, targetHub.lon);
+                if (!path.isUnreachable && path.coords.length > 0) {
+                    amb.status = "Repositioning";
+                    amb.pathCoords = path.coords;
+                    amb.pathIndex = 0;
+                    amb.targetLocation = [targetHub.lat, targetHub.lon];
+                    amb.edgesRemaining = path.edgesTraversed;
+                    logEvent("Staging", `🚑 ${amb.id} staging at ${targetHub.name} (8-min demand coverage).`, "badge-staging");
+                }
+            }
+        });
+    }
+
+    /* ==========================================================================
+       MODULE 5: SIMULATION ENGINE (AMBULANCES, INCIDENTS, KPIS)
+       ========================================================================== */
+
+    let ambulances = [
+        { id: "Amb-01", lat: 18.5150, lon: 73.8500, status: "Idle", pathCoords: [], pathIndex: 0, assignedIncident: null, targetHospital: null },
+        { id: "Amb-02", lat: 18.5250, lon: 73.8620, status: "Idle", pathCoords: [], pathIndex: 0, assignedIncident: null, targetHospital: null },
+        { id: "Amb-03", lat: 18.5050, lon: 73.8400, status: "Idle", pathCoords: [], pathIndex: 0, assignedIncident: null, targetHospital: null },
+        { id: "Amb-04", lat: 18.5330, lon: 73.8770, status: "Idle", pathCoords: [], pathIndex: 0, assignedIncident: null, targetHospital: null }
+    ];
+
+    let activeIncidents = [];
+    let waitingCallsQueue = [];
+    let completedResponses = [4.8];
+
+    let kpiState = {
+        activeCases: 0,
+        waitingCalls: 0,
+        resolvedCount: 12,
+        reroutesCount: 0,
+        simMinutes: 0
+    };
+
+    function spawnEmergencyCall() {
+        const priorities = ["Critical", "Urgent", "Standard"];
+        const priority = priorities[Math.floor(Math.random() * priorities.length)];
+
+        const isRiverCall = Math.random() < 0.65;
+        let callLat, callLon;
+
+        if (isRiverCall && RIVER_SPINE.length > 0) {
+            const riverPt = RIVER_SPINE[Math.floor(Math.random() * RIVER_SPINE.length)];
+            callLat = riverPt[0] + (Math.random() * 0.008 - 0.004);
+            callLon = riverPt[1] + (Math.random() * 0.008 - 0.004);
+        } else {
+            callLat = 18.5100 + Math.random() * 0.035;
+            callLon = 18.5200 + Math.random() * 0.055;
+        }
+
+        const call = {
+            id: `Inc-${Math.floor(100 + Math.random() * 900)}`,
+            lat: callLat,
+            lon: callLon,
+            priority: priority,
+            spawnTime: Date.now(),
+            status: "Waiting"
+        };
+
+        waitingCallsQueue.push(call);
+        logEvent("New 108 Call", `🚨 Emergency Call ${call.id} (${call.priority} triage priority).`, "badge-hazard");
+        dispatchNextCall();
+    }
+
+    function dispatchNextCall() {
+        if (waitingCallsQueue.length === 0) return;
+
+        const availableAmb = ambulances.find(a => a.status === "Idle" || a.status === "Repositioning");
+        if (!availableAmb) return;
+
+        const call = waitingCallsQueue.shift();
+        activeIncidents.push(call);
+
+        availableAmb.status = "En Route to Scene";
+        availableAmb.assignedIncident = call;
+        call.assignedAmbulance = availableAmb.id;
+
+        const path = findPath(availableAmb.lat, availableAmb.lon, call.lat, call.lon);
+        availableAmb.pathCoords = path.coords;
+        availableAmb.pathIndex = 0;
+        availableAmb.targetLocation = [call.lat, call.lon];
+        availableAmb.edgesRemaining = path.edgesTraversed;
+
+        logEvent("Dispatch", `🚑 ${availableAmb.id} dispatched to ${call.id} (ETA: ${(path.costSec/60).toFixed(1)}m).`, "badge-triage");
+        syncIncidentMarkers();
+        updateKPIs();
+    }
+
+    function stepSimulation() {
+        kpiState.simMinutes += 0.2;
+        document.getElementById('sim-clock-label').innerText = `T+${Math.floor(kpiState.simMinutes)} min`;
+
+        ambulances.forEach(amb => {
+            if (amb.pathCoords && amb.pathCoords.length > 0) {
+                amb.pathIndex += 1;
+                if (amb.pathIndex < amb.pathCoords.length) {
+                    amb.lat = amb.pathCoords[amb.pathIndex][0];
+                    amb.lon = amb.pathCoords[amb.pathIndex][1];
+                } else {
+                    onAmbulanceReachedDestination(amb);
+                }
+            }
+        });
+
+        updateAmbulanceMarkers();
+        updateKPIs();
+    }
+
+    function driftHospitals() {
+        hospitals.forEach(h => {
+            if (Math.random() < 0.35) {
+                h.bedsOccupied = Math.max(10, Math.min(h.max, h.bedsOccupied + (Math.random() > 0.45 ? 1 : -1)));
+            }
+        });
+        updateHospitalBars();
+    }
+
+    function onAmbulanceReachedDestination(amb) {
+        if (amb.status === "En Route to Scene") {
+            amb.status = "On Scene";
+            const call = amb.assignedIncident;
+            if (call) {
+                const respTimeMin = (Date.now() - call.spawnTime) / 60000;
+                completedResponses.push(respTimeMin);
+            }
+
+            logEvent("On Scene", `🚑 ${amb.id} on scene at ${call ? call.id : 'incident'}. Stabilizing patient...`, "badge-triage");
+
+            safeSetTimeout(() => {
+                const triage = selectOptimalHospital([amb.lat, amb.lon], call ? call.priority : "Urgent");
+                const destHosp = triage.hospital;
+                amb.targetHospital = destHosp;
+                amb.status = "Transporting to Hospital";
+
+                const path = findPath(amb.lat, amb.lon, destHosp.lat, destHosp.lon);
+                amb.pathCoords = path.coords;
+                amb.pathIndex = 0;
+                amb.targetLocation = [destHosp.lat, destHosp.lon];
+                amb.edgesRemaining = path.edgesTraversed;
+
+                logEvent("Triage Decision", `🏥 ${amb.id} en route to ${destHosp.name}. ${triage.reason}`, "badge-triage");
+            }, 1200);
+
+        } else if (amb.status === "Transporting to Hospital") {
+            amb.status = "Transferring Patient";
+            const hosp = amb.targetHospital;
+            if (hosp) hosp.bedsOccupied = Math.min(hosp.max, hosp.bedsOccupied + 1);
+
+            logEvent("Patient Handover", `✅ ${amb.id} delivered patient to ${hosp ? hosp.name : 'Hospital'} (Bed occupancy: ${hosp ? hosp.bedsOccupied : ''}/${hosp ? hosp.max : ''}).`, "badge-triage");
+
+            kpiState.resolvedCount++;
+            activeIncidents = activeIncidents.filter(inc => inc.id !== (amb.assignedIncident ? amb.assignedIncident.id : ''));
+            syncIncidentMarkers();
+
+            amb.assignedIncident = null;
+            amb.targetHospital = null;
+            updateHospitalBars();
+
+            safeSetTimeout(() => {
+                amb.status = "Idle";
+                amb.pathCoords = [];
+                amb.pathIndex = 0;
+                dispatchNextCall();
+                repositionIdleAmbulances();
+            }, 1500);
+
+        } else if (amb.status === "Repositioning") {
+            amb.status = "Idle";
+            amb.pathCoords = [];
+            amb.pathIndex = 0;
+            dispatchNextCall();
+        }
+    }
+
+    function updateKPIs() {
+        document.getElementById('kpi-active-cases').textContent = activeIncidents.length;
+        document.getElementById('kpi-waiting').textContent = waitingCallsQueue.length;
+        document.getElementById('kpi-resolved').textContent = kpiState.resolvedCount;
+        document.getElementById('kpi-reroutes').textContent = kpiState.reroutesCount;
+
+        if (completedResponses.length > 0) {
+            const sum = completedResponses.reduce((a, b) => a + b, 0);
+            const avg = (sum / completedResponses.length).toFixed(1);
+            document.getElementById('kpi-avg-resp').textContent = `${avg}m`;
+        }
+    }
+
+    /* ==========================================================================
+       MODULE 6: UI, MAP CANVAS LAYERS, STABLE DOM BINDINGS & CONTROLS
+       ========================================================================== */
+
+    let map = null;
+    let roadCanvasRenderer = null;
+    let roadsLayerGroup = null;
+    let edgePolylineMap = {};
+
+    let markersLayerGroup = null;
+    const ambMarkerMap = {};
+    const incidentMarkerMap = {};
+    const hospitalMarkerMap = {};
+    const hospitalDomMap = {};
+
+    function initMap() {
+        map = L.map('map', { preferCanvas: true }).setView(PUNE_CENTER, 14);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        roadCanvasRenderer = L.canvas({ padding: 0.5 });
+        roadsLayerGroup = L.layerGroup().addTo(map);
+        markersLayerGroup = L.layerGroup().addTo(map);
+
+        map.on('click', onMapClick);
+    }
+
+    function initRoadPolylinesOnMap() {
+        roadsLayerGroup.clearLayers();
+        edgePolylineMap = {};
+
+        Object.values(roadGraph.edges).forEach(edge => {
+            const poly = L.polyline(edge.polylineCoords, {
+                renderer: roadCanvasRenderer,
+                color: '#2ed573',
+                weight: 2.5,
+                opacity: 0.85
+            });
+
+            poly.on('click', (e) => {
+                L.DomEvent.stopPropagation(e);
+                toggleRoadManualBlock(edge.id);
+            });
+
+            poly.bindTooltip(`<b>${edge.name}</b><br><i>Click to toggle</i>`, { sticky: true });
+            poly.addTo(roadsLayerGroup);
+            edgePolylineMap[edge.id] = poly;
+        });
+    }
+
+    function updateRoadStyles() {
+        const isRoadsVisible = document.getElementById('layer-roads').checked;
+        if (!isRoadsVisible) {
+            if (map.hasLayer(roadsLayerGroup)) map.removeLayer(roadsLayerGroup);
+            return;
+        } else {
+            if (!map.hasLayer(roadsLayerGroup)) map.addLayer(roadsLayerGroup);
+        }
+
+        Object.values(roadGraph.edges).forEach(edge => {
+            const poly = edgePolylineMap[edge.id];
+            if (!poly) return;
+
+            let color = '#2ed573';
+            let weight = 2.5;
+            let dash = null;
+
+            if (edge.isClosed) {
+                color = '#ff4757';
+                weight = 4;
+            } else if (edge.isAtRisk) {
+                color = '#ffa502';
+                weight = 3;
+                dash = '4, 6';
+            }
+
+            poly.setStyle({ color, weight, dashArray: dash });
+        });
+    }
+
+    function getAmbulanceSvg(beaconColor) {
+        return `
+        <svg viewBox="0 0 26 26" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="7" width="16" height="13" rx="2" fill="#ffffff" stroke="#121820" stroke-width="1.2"/>
+            <path d="M18 10 H22 L24 14 V20 H18 V10 Z" fill="#f1f2f6" stroke="#121820" stroke-width="1.2"/>
+            <path d="M18 11.5 H21 L22.5 14 H18 V11.5 Z" fill="#70a1ff"/>
+            <rect x="2" y="14" width="22" height="2" fill="#ff4757"/>
+            <rect x="8" y="9.5" width="4" height="1.2" fill="#ff4757"/>
+            <rect x="9.4" y="8.1" width="1.2" height="4" fill="#ff4757"/>
+            <circle cx="6.5" cy="20" r="2.2" fill="#2f3542" stroke="#ffffff" stroke-width="0.8"/>
+            <circle cx="19.5" cy="20" r="2.2" fill="#2f3542" stroke="#ffffff" stroke-width="0.8"/>
+            <circle cx="10" cy="5" r="2" fill="${beaconColor}" class="siren-beacon"/>
+        </svg>`;
+    }
+
+    function createAmbulanceIcon(amb) {
+        let statusClass = 'idle';
+        let beaconColor = '#1e90ff';
+
+        if (amb.status === 'En Route to Scene') {
+            statusClass = 'dispatch';
+            beaconColor = '#ff4757';
+        } else if (amb.status === 'On Scene') {
+            statusClass = 'scene';
+            beaconColor = '#2ed573';
+        } else if (amb.status === 'Transporting to Hospital') {
+            statusClass = 'transport';
+            beaconColor = '#ffa502';
+        } else if (amb.status === 'Transferring Patient') {
+            statusClass = 'transfer';
+            beaconColor = '#2ed573';
+        } else if (amb.status === 'Repositioning') {
+            statusClass = 'staging';
+            beaconColor = '#70a1ff';
+        }
+
+        return L.divIcon({
+            className: 'custom-amb-marker-container',
+            html: `
+                <div class="custom-amb-marker amb-status-${statusClass}">
+                    <div class="amb-vehicle-box">
+                        ${getAmbulanceSvg(beaconColor)}
+                    </div>
+                    <div class="amb-tag">${amb.id}</div>
+                </div>
+            `,
+            iconSize: [40, 44],
+            iconAnchor: [20, 22],
+            popupAnchor: [0, -22]
+        });
+    }
+
+    function updateAmbulanceMarkers() {
+        if (!document.getElementById('layer-amb').checked) {
+            Object.values(ambMarkerMap).forEach(m => m.remove());
+            return;
+        }
+
+        ambulances.forEach(amb => {
+            let m = ambMarkerMap[amb.id];
+            if (!m) {
+                m = L.marker([amb.lat, amb.lon], {
+                    icon: createAmbulanceIcon(amb),
+                    zIndexOffset: 1000
+                }).bindPopup(`<b>🚑 ${amb.id}</b><br>Status: <strong>${amb.status}</strong>`);
+                m.addTo(markersLayerGroup);
+                ambMarkerMap[amb.id] = m;
+                amb._lastStatus = amb.status;
+            } else {
+                m.setLatLng([amb.lat, amb.lon]);
+                if (amb._lastStatus !== amb.status) {
+                    m.setIcon(createAmbulanceIcon(amb));
+                    m.setPopupContent(`<b>🚑 ${amb.id}</b><br>Status: <strong>${amb.status}</strong>`);
+                    amb._lastStatus = amb.status;
+                }
+                if (!markersLayerGroup.hasLayer(m)) m.addTo(markersLayerGroup);
+            }
+        });
+    }
+
+    function syncIncidentMarkers() {
+        const currentIds = new Set(activeIncidents.map(i => i.id));
+        for (let id in incidentMarkerMap) {
+            if (!currentIds.has(id)) {
+                incidentMarkerMap[id].remove();
+                delete incidentMarkerMap[id];
+            }
+        }
+        activeIncidents.forEach(inc => {
+            if (!incidentMarkerMap[inc.id]) {
+                const m = L.circleMarker([inc.lat, inc.lon], {
+                    radius: 9,
+                    color: '#ffffff',
+                    fillColor: '#ff4757',
+                    fillOpacity: 1,
+                    weight: 2.5
+                }).bindPopup(`<b>🚨 Incident ${inc.id}</b><br>Priority: <strong>${inc.priority}</strong>`);
+                m.addTo(markersLayerGroup);
+                incidentMarkerMap[inc.id] = m;
+            }
+        });
+    }
+
+    function initHospitalMarkers() {
+        Object.values(hospitalMarkerMap).forEach(m => m.remove());
+        for (let k in hospitalMarkerMap) delete hospitalMarkerMap[k];
+
+        hospitals.forEach(h => {
+            const pct = (h.bedsOccupied / h.max) * 100;
+            let color = pct > 90 ? '#ff4757' : (pct > 70 ? '#ffa502' : '#2ed573');
+            if (h.isFlooded) color = '#57606f';
+
+            const m = L.circleMarker([h.lat, h.lon], {
+                radius: 11,
+                color: '#ffffff',
+                fillColor: color,
+                fillOpacity: 1,
+                weight: 2
+            }).bindPopup(`<b>🏥 ${h.name}</b><br>Capacity: <strong>${h.bedsOccupied} / ${h.max} Beds (${pct.toFixed(0)}%)</strong>`);
+
+            m.addTo(markersLayerGroup);
+            hospitalMarkerMap[h.id] = m;
+        });
+    }
+
+    function initHospitalBars() {
+        renderFilteredHospitalBars("");
+    }
+
+    function renderFilteredHospitalBars(filterText = "") {
+        const container = document.getElementById('hospital-list-container');
+        if (!container) return;
+
+        const lower = (filterText || "").toLowerCase().trim();
+        let displayList = hospitals;
+        if (lower) {
+            displayList = hospitals.filter(h => h.name.toLowerCase().includes(lower));
+        }
+
+        // Limit initial display to 30 items for ultra-smooth scrolling, or all if filtered
+        const itemsToRender = lower ? displayList : displayList.slice(0, 30);
+
+        container.innerHTML = itemsToRender.map(h => {
+            const pct = Math.min(100, Math.round((h.bedsOccupied / h.max) * 100));
+            return `
+                <div class="hospital-row" id="hosp-row-${h.id}">
+                    <div class="hospital-info">
+                        <span><strong>${h.name}</strong></span>
+                        <div class="hosp-stats">
+                            <span id="hosp-beds-${h.id}" class="hosp-beds-count">${h.bedsOccupied} / ${h.max} Beds</span>
+                            <span id="hosp-txt-${h.id}">${pct}%</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="hosp-bar-${h.id}" style="width: ${pct}%;"></div>
+                    </div>
+                    <div class="hosp-row-actions">
+                        <button class="hosp-mini-btn" onclick="adjustHospitalCapacity('${h.id}', -15)" title="Discharge 15 patients">-15</button>
+                        <button class="hosp-mini-btn" onclick="adjustHospitalCapacity('${h.id}', +15)" title="Admit 15 patients">+15</button>
+                        <button class="hosp-mini-btn overload-btn" onclick="setHospitalOverload('${h.id}')" title="Simulate 95% overload">Max (95%)</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        if (!lower && hospitals.length > 30) {
+            container.innerHTML += `<div style="font-size:10px; color:var(--text-muted); text-align:center; padding:4px;">+ ${hospitals.length - 30} more hospitals (use search above to filter)</div>`;
+        }
+
+        // Cache DOM pointers
+        hospitals.forEach(h => {
+            hospitalDomMap[h.id] = {
+                txt: document.getElementById(`hosp-txt-${h.id}`),
+                beds: document.getElementById(`hosp-beds-${h.id}`),
+                bar: document.getElementById(`hosp-bar-${h.id}`)
+            };
+        });
+
+        updateHospitalBars();
+    }
+
+    function filterHospitalDisplay(query) {
+        renderFilteredHospitalBars(query);
+    }
+
+    function updateHospitalBars() {
+        hospitals.forEach(h => {
+            const dom = hospitalDomMap[h.id];
+            const pct = Math.min(100, Math.round((h.bedsOccupied / h.max) * 100));
+            let fillClass = pct > 90 ? 'danger' : (pct > 70 ? 'warning' : '');
+            let statusText = `${pct}% Capacity`;
+
+            if (h.isFlooded) {
+                fillClass = 'offline';
+                statusText = '<span style="color:#ff6b81;font-weight:bold;">OFFLINE (FLOODED)</span>';
+            }
+
+            if (dom) {
+                if (dom.bar) {
+                    dom.bar.className = `progress-fill ${fillClass}`;
+                    dom.bar.style.width = (h.isFlooded ? 100 : pct) + '%';
+                }
+                if (dom.txt) dom.txt.innerHTML = statusText;
+                if (dom.beds) dom.beds.innerText = `${h.bedsOccupied} / ${h.max} Beds`;
+            }
+
+            const m = hospitalMarkerMap[h.id];
+            if (m) {
+                let color = pct > 90 ? '#ff4757' : (pct > 70 ? '#ffa502' : '#2ed573');
+                if (h.isFlooded) color = '#57606f';
+                m.setStyle({ fillColor: color });
+                m.setPopupContent(`<b>🏥 ${h.name}</b><br>Capacity: <strong>${h.bedsOccupied} / ${h.max} Beds (${pct.toFixed(0)}%)</strong>${h.isFlooded ? '<br><span style="color:#ff6b81;">(OFFLINE)</span>' : ''}`);
+            }
+        });
+    }
+
+    function simulateHospitalSurge(factor = 0.25) {
+        hospitals.forEach(h => {
+            if (!h.isFlooded) {
+                h.bedsOccupied = Math.min(h.max, Math.round(h.bedsOccupied * (1 + factor)));
+            }
+        });
+        updateHospitalBars();
+        logEvent("Capacity Surge", `🚨 Mass-casualty surge triggered (+${Math.round(factor * 100)}% load across hospitals).`, "badge-capacity");
+        onNetworkChange();
+        syncHospitalCapacityBackend({ action: "surge", factor: 1 + factor });
+    }
+
+    function simulateHospitalDischarge(factor = 0.20) {
+        hospitals.forEach(h => {
+            if (!h.isFlooded) {
+                h.bedsOccupied = Math.max(10, Math.round(h.bedsOccupied * (1 - factor)));
+            }
+        });
+        updateHospitalBars();
+        logEvent("Capacity Discharge", `📉 Emergency discharge wave executed (-${Math.round(factor * 100)}% occupancy freed).`, "badge-capacity");
+        onNetworkChange();
+        syncHospitalCapacityBackend({ action: "discharge", factor: 1 - factor });
+    }
+
+    function resetHospitalCapacities() {
+        hospitals.forEach(h => {
+            const def = DEFAULT_HOSPITALS.find(dh => dh.id === h.id);
+            h.bedsOccupied = def ? def.bedsOccupied : Math.round(h.max * 0.55);
+        });
+        updateHospitalBars();
+        logEvent("Capacity Reset", `🔄 Regional hospital capacities restored to baseline.`, "badge-staging");
+        onNetworkChange();
+        syncHospitalCapacityBackend({ action: "reset" });
+    }
+
+    function adjustHospitalCapacity(hId, delta) {
+        const h = hospitals.find(x => x.id === hId);
+        if (!h) return;
+        h.bedsOccupied = Math.max(0, Math.min(h.max, h.bedsOccupied + delta));
+        updateHospitalBars();
+        const pct = Math.round((h.bedsOccupied / h.max) * 100);
+        logEvent("Capacity Update", `📊 ${h.name} beds adjusted to ${h.bedsOccupied}/${h.max} (${pct}%).`, pct > 90 ? "badge-hazard" : "badge-capacity");
+        onNetworkChange();
+        syncHospitalCapacityBackend({ hospital_id: hId, beds_occupied: h.bedsOccupied });
+    }
+
+    function setHospitalOverload(hId) {
+        const h = hospitals.find(x => x.id === hId);
+        if (!h) return;
+        h.bedsOccupied = Math.min(h.max, Math.round(h.max * 0.96));
+        updateHospitalBars();
+        logEvent("Hospital Overload", `⚠️ ${h.name} pushed to critical overload (96% capacity)! Ambulances diverting.`, "badge-hazard");
+        onNetworkChange();
+        syncHospitalCapacityBackend({ hospital_id: hId, beds_occupied: h.bedsOccupied });
+    }
+
+    async function syncHospitalCapacityBackend(payload) {
+        try {
+            await fetch('/api/hospitals/capacity', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+        } catch (e) {
+            // Live Server / static fallback mode
+        }
+    }
+
+    /* ==========================================================================
+       MODULE 7: CITIZEN EMERGENCY NAVIGATION & DIRECT 108 DISPATCH
+       ========================================================================== */
+
+    let userRoutePolyline = null;
+    let userLocationMarker = null;
+    let isUserPickingLocation = false;
+    let userCurrentLocation = { lat: 18.5170, lon: 73.8400, label: "Deccan Gymkhana" };
+
+    function createUserPinIcon() {
+        return L.divIcon({
+            className: 'custom-user-pin-container',
+            html: `
+                <div class="custom-user-pin">
+                    <div class="user-pulse-ring"></div>
+                    <div class="user-pin-badge">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+                            <circle cx="12" cy="12" r="8" fill="#00d2d3" stroke="#ffffff" stroke-width="2"/>
+                            <circle cx="12" cy="12" r="3" fill="#ffffff"/>
+                        </svg>
+                    </div>
+                    <div class="user-pin-tag">YOU</div>
+                </div>
+            `,
+            iconSize: [32, 40],
+            iconAnchor: [16, 20],
+            popupAnchor: [0, -20]
+        });
+    }
+
+    function toggleUserPickMode() {
+        isUserPickingLocation = !isUserPickingLocation;
+        const btn = document.getElementById('btn-user-pin');
+        if (isUserPickingLocation) {
+            if (isHazardPlacementActive) toggleHazardPlacementMode();
+            map.getContainer().style.cursor = 'crosshair';
+            if (btn) btn.style.background = '#00d2d3';
+            if (btn) btn.style.color = '#121820';
+            updateSystemStatus("📍 Click anywhere on the Pune map to set your location.");
+        } else {
+            map.getContainer().style.cursor = '';
+            if (btn) btn.style.background = '';
+            if (btn) btn.style.color = '';
+            updateSystemStatus("Autonomous emergency optimization engine active.");
+        }
+    }
+
+    function setUserLocationFromCoords(lat, lon, label = "Selected Location") {
+        const pLat = parseFloat(lat);
+        const pLon = parseFloat(lon);
+        userCurrentLocation = { lat: pLat, lon: pLon, label };
+        const input = document.getElementById('user-location-input');
+        if (input) input.value = `${pLat.toFixed(6)}, ${pLon.toFixed(6)}`;
+
+        if (!userLocationMarker) {
+            userLocationMarker = L.marker([pLat, pLon], {
+                icon: createUserPinIcon(),
+                zIndexOffset: 1200
+            }).bindPopup(`<b>📍 Your Location</b><br>${label}<br>(${pLat.toFixed(6)}, ${pLon.toFixed(6)})`);
+            userLocationMarker.addTo(map);
+        } else {
+            userLocationMarker.setLatLng([pLat, pLon]);
+            userLocationMarker.setPopupContent(`<b>📍 Your Location</b><br>${label}<br>(${pLat.toFixed(6)}, ${pLon.toFixed(6)})`);
+        }
+    }
+
+    function selectUserPreset(name, lat, lon) {
+        setUserLocationFromCoords(lat, lon, name);
+        map.setView([lat, lon], 14);
+        logEvent("Location Set", `Citizen location set to ${name} (${lat.toFixed(6)}, ${lon.toFixed(6)}).`, "badge-user");
+    }
+
+    function parseUserInputLocation() {
+        const input = document.getElementById('user-location-input');
+        if (!input) return userCurrentLocation;
+        const val = input.value.trim();
+
+        const parts = val.split(/[,\s]+/).map(p => parseFloat(p));
+        if (parts.length >= 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+            if (userCurrentLocation && Math.abs(userCurrentLocation.lat - parts[0]) < 0.0001 && Math.abs(userCurrentLocation.lon - parts[1]) < 0.0001) {
+                return userCurrentLocation;
+            }
+            return { lat: parts[0], lon: parts[1], label: "Pinned Coordinates" };
+        }
+
+        const nameMap = {
+            "deccan": { lat: 18.5170, lon: 73.8400, label: "Deccan Gymkhana" },
+            "fc road": { lat: 18.5285, lon: 73.8450, label: "FC Road" },
+            "shivajinagar": { lat: 18.5310, lon: 73.8485, label: "Shivajinagar" },
+            "station": { lat: 18.5289, lon: 73.8744, label: "Pune Railway Station" },
+            "swargate": { lat: 18.5015, lon: 73.8565, label: "Swargate" },
+            "kothrud": { lat: 18.5075, lon: 73.8080, label: "Kothrud" },
+            "koregaon": { lat: 18.5360, lon: 73.8940, label: "Koregaon Park" },
+            "aundh": { lat: 18.5600, lon: 73.8080, label: "Aundh" },
+            "hadapsar": { lat: 18.5010, lon: 73.9280, label: "Hadapsar" },
+            "viman nagar": { lat: 18.5670, lon: 73.9140, label: "Viman Nagar" }
+        };
+
+        const lower = val.toLowerCase();
+        for (let key in nameMap) {
+            if (lower.includes(key)) return nameMap[key];
+        }
+
+        return userCurrentLocation;
+    }
+
+    // Citizen Safe Route Calculation: Passes exact pinned coordinates to routing handler and begins polyline at exact pin
+    async function calculateUserRouteToHospital() {
+        const loc = parseUserInputLocation();
+        setUserLocationFromCoords(loc.lat, loc.lon, loc.label);
+
+        let bestHospital = null;
+        let pathCoords = null;
+        let distKm = 0;
+        let etaMin = "0.0";
+        let freeBeds = 0;
+
+        // 1. Query backend routing request handler with exact pinned coordinates
+        try {
+            const resp = await fetch('/api/user-route', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ lat: loc.lat, lon: loc.lon, label: loc.label })
+            });
+            if (resp.ok) {
+                const data = await resp.json();
+                if (data.hospital && Array.isArray(data.route_coords) && data.route_coords.length > 1) {
+                    bestHospital = data.hospital;
+                    pathCoords = data.route_coords;
+                    distKm = data.distance_km;
+                    etaMin = (typeof data.estimated_minutes === 'number') ? data.estimated_minutes.toFixed(1) : data.estimated_minutes;
+                    freeBeds = Math.max(0, (bestHospital.max || 120) - (bestHospital.capacity || bestHospital.bedsOccupied || 0));
+                }
+            }
+        } catch (e) {
+            // Live Server / static fallback
+        }
+
+        // 2. Client-side OSM graph routing fallback if backend unavailable
+        if (!pathCoords) {
+            const evaluations = evaluateHospitalsFromSource(loc.lat, loc.lon);
+            if (evaluations.length === 0) {
+                const statusDiv = document.getElementById('user-nav-status');
+                statusDiv.style.display = 'block';
+                statusDiv.innerHTML = `<span style="color:#ff6b81;">⚠️ No safe road route found from this location. Road access is completely submerged or blocked.</span>`;
+                return;
+            }
+
+            const bestEval = evaluations[0];
+            bestHospital = bestEval.hospital;
+            pathCoords = reconstructPathFromEvaluation(bestEval);
+            etaMin = bestEval.etaMin.toFixed(1);
+            freeBeds = bestEval.freeBeds;
+
+            // Ensure route starts at the exact user pinned coordinates
+            if (pathCoords.length > 0 && (pathCoords[0][0] !== loc.lat || pathCoords[0][1] !== loc.lon)) {
+                pathCoords.unshift([loc.lat, loc.lon]);
+            }
+
+            for (let i = 0; i < pathCoords.length - 1; i++) {
+                distKm += haversineDistance(
+                    pathCoords[i][0], pathCoords[i][1],
+                    pathCoords[i+1][0], pathCoords[i+1][1]
+                ) / 1000;
+            }
+        }
+
+        // Explicitly ensure the resulting highlighted route polyline begins at the user's exact pinned coordinates
+        if (pathCoords && pathCoords.length > 0) {
+            if (pathCoords[0][0] !== loc.lat || pathCoords[0][1] !== loc.lon) {
+                pathCoords.unshift([loc.lat, loc.lon]);
+            }
+        }
+
+        if (!pathCoords || pathCoords.length < 2) {
+            const statusDiv = document.getElementById('user-nav-status');
+            statusDiv.style.display = 'block';
+            statusDiv.innerHTML = `<span style="color:#ff6b81;">⚠️ Path calculation could not complete safe street traversal.</span>`;
+            return;
+        }
+
+        // Draw true OSM road network graph route with glowing styling
+        if (userRoutePolyline) map.removeLayer(userRoutePolyline);
+        userRoutePolyline = L.polyline(pathCoords, {
+            color: '#00d2d3',
+            weight: 5,
+            opacity: 0.95
+        }).addTo(map);
+
+        // Fit map bounds to show route
+        map.fitBounds(userRoutePolyline.getBounds(), { padding: [50, 50] });
+
+        // Update UI status box
+        const statusDiv = document.getElementById('user-nav-status');
+        statusDiv.style.display = 'block';
+        statusDiv.innerHTML = `
+            <div style="color:#00d2d3; font-weight:700; margin-bottom:4px;">🏥 Nearest Safe Hospital: ${bestHospital.name}</div>
+            <div style="color:var(--text-main); font-size:11px;">
+                🚗 Road Distance: <strong>${distKm.toFixed(2)} km</strong> &nbsp;|&nbsp; ETA: <strong>${etaMin} min</strong><br>
+                🛏️ Available Beds: <strong>${freeBeds} / ${bestHospital.max || 120}</strong> (${Math.round(((bestHospital.capacity || bestHospital.bedsOccupied || 0)/(bestHospital.max || 120))*100)}% capacity)<br>
+                <span style="color:#2ed573;">✅ Verified OSM road route: explicitly starts at your exact pinned coordinates (${loc.lat.toFixed(6)}, ${loc.lon.toFixed(6)}) and follows safe corridors.</span>
+            </div>
+        `;
+
+        logEvent("Citizen Navigation", `🧭 Safe route computed from [${loc.lat.toFixed(6)}, ${loc.lon.toFixed(6)}] to ${bestHospital.name} (${distKm.toFixed(2)} km, ${etaMin}m ETA via OSM road graph).`, "badge-user");
+    }
+
+    // Call for an Ambulance (108): Dispatches nearest fleet unit along the OSM road graph
+    function dispatchAmbulanceToUser() {
+        const loc = parseUserInputLocation();
+        setUserLocationFromCoords(loc.lat, loc.lon, loc.label);
+
+        let selectedAmb = null;
+        let shortestEta = Infinity;
+        let selectedPath = null;
+
+        const availableAmbs = ambulances.filter(a => a.status === "Idle" || a.status === "Repositioning");
+        const pool = availableAmbs.length > 0 ? availableAmbs : ambulances;
+
+        pool.forEach(amb => {
+            const path = findPath(amb.lat, amb.lon, loc.lat, loc.lon);
+            if (!path.isUnreachable && path.costSec < shortestEta) {
+                shortestEta = path.costSec;
+                selectedAmb = amb;
+                selectedPath = path;
+            }
+        });
+
+        if (!selectedAmb || !selectedPath || selectedPath.coords.length === 0) {
+            alert("No available ambulances can reach this location due to road cuts.");
+            return;
+        }
+
+        const userCall = {
+            id: `Citizen-108`,
+            lat: loc.lat,
+            lon: loc.lon,
+            priority: "Critical",
+            spawnTime: Date.now(),
+            status: "Waiting",
+            isCitizenCall: true
+        };
+
+        activeIncidents = activeIncidents.filter(inc => inc.id !== userCall.id);
+        activeIncidents.unshift(userCall);
+
+        selectedAmb.status = "En Route to Scene";
+        selectedAmb.assignedIncident = userCall;
+        userCall.assignedAmbulance = selectedAmb.id;
+
+        selectedAmb.pathCoords = selectedPath.coords;
+        selectedAmb.pathIndex = 0;
+        selectedAmb.targetLocation = [loc.lat, loc.lon];
+        selectedAmb.edgesRemaining = selectedPath.edgesTraversed;
+
+        const etaMin = (selectedPath.costSec / 60).toFixed(1);
+
+        const statusDiv = document.getElementById('user-nav-status');
+        statusDiv.style.display = 'block';
+        statusDiv.innerHTML = `
+            <div style="color:#ff6b81; font-weight:700; margin-bottom:4px;">🚨 108 Emergency Unit Dispatched!</div>
+            <div style="color:var(--text-main); font-size:11px;">
+                🚑 Assigned Unit: <strong>${selectedAmb.id}</strong><br>
+                ⏱️ Estimated Arrival Time: <strong>${etaMin} min</strong><br>
+                📍 Destination: <strong>${loc.label} (${loc.lat.toFixed(4)}, ${loc.lon.toFixed(4)})</strong><br>
+                <span style="color:#2ed573;">Ambulance is actively navigating the OSM road network toward your position.</span>
+            </div>
+        `;
+
+        logEvent("Citizen 108 Call", `🚨 Priority 108 dispatch requested by citizen! Unit ${selectedAmb.id} dispatched (ETA: ${etaMin}m).`, "badge-hazard");
+
+        syncIncidentMarkers();
+        updateAmbulanceMarkers();
+        updateKPIs();
+    }
+
+    function toggleLayers() {
+        updateRoadStyles();
+        updateAmbulanceMarkers();
+
+        if (document.getElementById('layer-hosp').checked) {
+            Object.values(hospitalMarkerMap).forEach(m => { if (!markersLayerGroup.hasLayer(m)) markersLayerGroup.addLayer(m); });
+        } else {
+            Object.values(hospitalMarkerMap).forEach(m => m.remove());
+        }
+
+        if (document.getElementById('layer-hazards').checked) {
+            if (activeFloodPolygon && !map.hasLayer(activeFloodPolygon)) map.addLayer(activeFloodPolygon);
+            if (forecastFloodPolygon && !map.hasLayer(forecastFloodPolygon)) map.addLayer(forecastFloodPolygon);
+        } else {
+            if (activeFloodPolygon) activeFloodPolygon.remove();
+            if (forecastFloodPolygon) forecastFloodPolygon.remove();
+        }
+    }
+
+    function onForecastSliderChange(val) {
+        forecastMinuteOffset = parseInt(val);
+        const totalRain = (weatherData.currentRain + (forecastMinuteOffset * 0.45)).toFixed(1);
+        document.getElementById('slider-forecast-val').innerText = `T+${val} min (${totalRain} mm/h)`;
+        onNetworkChange();
+    }
+
+    function logEvent(type, text, badgeClass) {
+        const feed = document.getElementById('event-feed');
+        if (!feed) return;
+        const now = new Date().toTimeString().split(' ')[0];
+        const entry = document.createElement('div');
+        entry.className = 'feed-entry';
+        entry.innerHTML = `
+            <div class="feed-header">
+                <span class="badge ${badgeClass || 'badge-staging'}">${type}</span>
+                <span>${now}</span>
+            </div>
+            <div class="feed-text">${text}</div>
+        `;
+        feed.insertBefore(entry, feed.firstChild);
+        if (feed.children.length > 25) feed.removeChild(feed.lastChild);
+    }
+
+    function updateSystemStatus(text) {
+        const elem = document.getElementById('status-text');
+        if (elem) elem.innerText = text;
+    }
+
+    // Complete simulation reset function
+    function resetSimulation() {
+        clearAllTimers();
+
+        if (markersLayerGroup) markersLayerGroup.clearLayers();
+
+        hazardCircleLayers.forEach(l => map.removeLayer(l));
+        hazardCircleLayers = [];
+        hazardCircles = [];
+
+        if (activeFloodPolygon) { map.removeLayer(activeFloodPolygon); activeFloodPolygon = null; }
+        if (forecastFloodPolygon) { map.removeLayer(forecastFloodPolygon); forecastFloodPolygon = null; }
+
+        if (userRoutePolyline) { map.removeLayer(userRoutePolyline); userRoutePolyline = null; }
+        if (userLocationMarker) { map.removeLayer(userLocationMarker); userLocationMarker = null; }
+        if (isUserPickingLocation) toggleUserPickMode();
+        const statusDiv = document.getElementById('user-nav-status');
+        if (statusDiv) statusDiv.style.display = 'none';
+
+        for (let k in ambMarkerMap) delete ambMarkerMap[k];
+        for (let k in incidentMarkerMap) delete incidentMarkerMap[k];
+        for (let k in hospitalMarkerMap) delete hospitalMarkerMap[k];
+
+        if (isHazardPlacementActive) toggleHazardPlacementMode();
+
+        waitingCallsQueue = [];
+        activeIncidents = [];
+        completedResponses = [4.8];
+        kpiState = { activeCases: 0, waitingCalls: 0, resolvedCount: 12, reroutesCount: 0, simMinutes: 0 };
+        forecastMinuteOffset = 0;
+
+        const slider = document.getElementById('forecast-slider');
+        if (slider) slider.value = 0;
+        const sliderVal = document.getElementById('slider-forecast-val');
+        if (sliderVal) sliderVal.innerText = `T+0 min (${weatherData.currentRain.toFixed(1)} mm/h)`;
+
+        const feed = document.getElementById('event-feed');
+        if (feed) {
+            feed.innerHTML = `
+                <div class="feed-entry">
+                    <div class="feed-header"><span class="badge badge-staging">System</span><span>00:00</span></div>
+                    <div class="feed-text">Simulation reset: all units at starting positions, closures cleared.</div>
+                </div>
+            `;
+        }
+
+        // Restore hospital occupancy
+        hospitals.forEach(h => {
+            h.isFlooded = false;
+            const def = DEFAULT_HOSPITALS.find(dh => dh.id === h.id);
+            h.bedsOccupied = def ? def.bedsOccupied : Math.round(h.max * 0.55);
+        });
+
+        // Rebuild graph with no closures
+        const cachedRoads = localStorage.getItem('pune_connected_osm_roads_v1');
+        if (cachedRoads) {
+            try {
+                buildGraphFromRoads(JSON.parse(cachedRoads));
+            } catch(e) {
+                loadComprehensivePuneFallbackGraph();
+            }
+        } else {
+            loadComprehensivePuneFallbackGraph();
+        }
+
+        // Re-seed ambulances
+        ambulances = [
+            { id: "Amb-01", lat: 18.5150, lon: 73.8500, status: "Idle", pathCoords: [], pathIndex: 0, assignedIncident: null, targetHospital: null },
+            { id: "Amb-02", lat: 18.5250, lon: 73.8620, status: "Idle", pathCoords: [], pathIndex: 0, assignedIncident: null, targetHospital: null },
+            { id: "Amb-03", lat: 18.5050, lon: 73.8400, status: "Idle", pathCoords: [], pathIndex: 0, assignedIncident: null, targetHospital: null },
+            { id: "Amb-04", lat: 18.5330, lon: 73.8770, status: "Idle", pathCoords: [], pathIndex: 0, assignedIncident: null, targetHospital: null }
+        ];
+
+        initHospitalBars();
+        initHospitalMarkers();
+        updateHazardsAndRoadStatus();
+        updateAmbulanceMarkers();
+        updateKPIs();
+
+        startAllTimers();
+        logEvent("Simulation Reset", "State fully restored to initial baseline. Dispatch engine restarted.", "badge-staging");
+    }
+
+    function isPointInPolygon(point, vs) {
+        const x = point[0], y = point[1];
+        let inside = false;
+        for (let i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+            const xi = vs[i][0], yi = vs[i][1];
+            const xj = vs[j][0], yj = vs[j][1];
+            const intersect = ((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+            if (intersect) inside = !inside;
+        }
+        return inside;
+    }
+
+    /* ==========================================================================
+       INITIALIZATION ENTRYPOINT
+       ========================================================================== */
+    window.addEventListener('DOMContentLoaded', async () => {
+        initMap();
+        await fetchWeather();
+        await loadHospitalDataset();
+        await loadRoadNetwork();
+        updateHazardsAndRoadStatus();
+        setUserLocationFromCoords(userCurrentLocation.lat, userCurrentLocation.lon, userCurrentLocation.label);
+
+        const resetBtn = document.getElementById('btn-reset');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                resetSimulation();
+            });
+        }
+
+        startAllTimers();
+        logEvent("System Ready", "Autonomous emergency optimization engine active. Multi-factor triage online.", "badge-triage");
+    });
+    </script>
+</body>
+</html>

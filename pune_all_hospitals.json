@@ -1,0 +1,2632 @@
+[
+  {
+    "id": "H_OSM_672120487",
+    "name": "Sardar Patel Cantonment General Hospital",
+    "lat": 18.50272,
+    "lon": 73.87712,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_674697804",
+    "name": "Dr. Babasaheb Ambedkar Cantonment General Hospital",
+    "lat": 18.56902,
+    "lon": 73.8487,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_678341812",
+    "name": "Command Hospital Southern Command",
+    "lat": 18.50058,
+    "lon": 73.88943,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_772571829",
+    "name": "Sassoon Hospital",
+    "lat": 18.52514,
+    "lon": 73.86957,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_871515219",
+    "name": "Dr. Chowdhary",
+    "lat": 18.55473,
+    "lon": 73.8082,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_871515522",
+    "name": "Dr. Bonagiri",
+    "lat": 18.55548,
+    "lon": 73.80886,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_1054641704",
+    "name": "Karva Hospital",
+    "lat": 18.50097,
+    "lon": 73.84611,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_1109153493",
+    "name": "Sahyadri Hospital",
+    "lat": 18.50751,
+    "lon": 73.80583,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_1109153494",
+    "name": "Krishna Hospital, Pune",
+    "lat": 18.50921,
+    "lon": 73.81282,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_1305056480",
+    "name": "Madhukar General Hospital",
+    "lat": 18.47892,
+    "lon": 73.82412,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_2289294093",
+    "name": "Surya Sahyadri Hospital",
+    "lat": 18.52126,
+    "lon": 73.85568,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_2868930216",
+    "name": "Fatima Convent Sahyadri Clinic",
+    "lat": 18.50452,
+    "lon": 73.90081,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_2921897064",
+    "name": "Gupte Hospital Of Accurate Diagnostics Pvt Ltd",
+    "lat": 18.51905,
+    "lon": 73.83987,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_2973466889",
+    "name": "AIMS Hospital",
+    "lat": 18.56254,
+    "lon": 73.8107,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_3238255107",
+    "name": "Naik Hospital, Pune",
+    "lat": 18.51029,
+    "lon": 73.85947,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_3696693817",
+    "name": "Bora Hospital",
+    "lat": 18.51146,
+    "lon": 73.86255,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_3719797432",
+    "name": "Patil Hospital",
+    "lat": 18.47919,
+    "lon": 73.8247,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_5832438811",
+    "name": "Golwilkar Metropolis Heath Service (India) Pvt Ltd",
+    "lat": 18.51813,
+    "lon": 73.83442,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_5832579347",
+    "name": "Paranjape Hospital",
+    "lat": 18.5144,
+    "lon": 73.84605,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_6612854042",
+    "name": "ONP Leela Hospital",
+    "lat": 18.53292,
+    "lon": 73.84681,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_6612986080",
+    "name": "Meera Hospital",
+    "lat": 18.50229,
+    "lon": 73.87469,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_6618960830",
+    "name": "Seth Ramdas Shah Memorial Hospital and Research Centre",
+    "lat": 18.52936,
+    "lon": 73.82841,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7042939578",
+    "name": "Yashda Hospital",
+    "lat": 18.51681,
+    "lon": 73.85953,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7042981399",
+    "name": "Joglekar Hospital",
+    "lat": 18.53275,
+    "lon": 73.83364,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7043003792",
+    "name": "Parmar Multi Hospital and Home",
+    "lat": 18.56006,
+    "lon": 73.80721,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7043164499",
+    "name": "Mothercare Hospital",
+    "lat": 18.48725,
+    "lon": 73.87601,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7043489278",
+    "name": "Argade Infertility and Endoscopic Surgery and Icu Center",
+    "lat": 18.50175,
+    "lon": 73.81024,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7043763362",
+    "name": "Shree Balaji Eye Hospital",
+    "lat": 18.49103,
+    "lon": 73.85817,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7044175339",
+    "name": "Chaitanya Stem Cell Center",
+    "lat": 18.50002,
+    "lon": 73.8504,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7044819851",
+    "name": "Galaxy Care Laparoscopy Institute Pvt. Ltd.",
+    "lat": 18.511,
+    "lon": 73.8371,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7045274083",
+    "name": "Punarvasu Chikitsalaya",
+    "lat": 18.52848,
+    "lon": 73.84232,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7045823776",
+    "name": "Umarji Hospital",
+    "lat": 18.51194,
+    "lon": 73.85776,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7045980540",
+    "name": "Latkar Hospital",
+    "lat": 18.5609,
+    "lon": 73.81322,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7046772780",
+    "name": "Shashwat Hospital",
+    "lat": 18.49483,
+    "lon": 73.81353,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7046910543",
+    "name": "Indira Home",
+    "lat": 18.51222,
+    "lon": 73.8763,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7047946884",
+    "name": "Ranka Hospital",
+    "lat": 18.49501,
+    "lon": 73.86189,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7048084570",
+    "name": "Bhide Hospital",
+    "lat": 18.50487,
+    "lon": 73.84434,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7048167596",
+    "name": "Poona Laser Center",
+    "lat": 18.51237,
+    "lon": 73.83818,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7048504194",
+    "name": "Amit Hospital",
+    "lat": 18.54635,
+    "lon": 73.88804,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7048871849",
+    "name": "Purandare Hospital, Pune",
+    "lat": 18.50229,
+    "lon": 73.85866,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7048881959",
+    "name": "Pramodini Urology Foundation",
+    "lat": 18.51991,
+    "lon": 73.84102,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7048928941",
+    "name": "Harsh Hospital",
+    "lat": 18.48029,
+    "lon": 73.86621,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7049267221",
+    "name": "Moolanis Eye Care Centre",
+    "lat": 18.50577,
+    "lon": 73.87835,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7049292470",
+    "name": "Gokhale Hospital",
+    "lat": 18.50217,
+    "lon": 73.85706,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7049516396",
+    "name": "Pune Fertility Center",
+    "lat": 18.52878,
+    "lon": 73.84799,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7049658153",
+    "name": "Joshi Hospital",
+    "lat": 18.51714,
+    "lon": 73.83329,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7049775522",
+    "name": "Shri Samarth Hospital",
+    "lat": 18.51806,
+    "lon": 73.86587,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7049807455",
+    "name": "Kamal Netra Rugnalaya",
+    "lat": 18.49499,
+    "lon": 73.81219,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7049902721",
+    "name": "Kulkarni Hospital and Diagnostic Centre",
+    "lat": 18.4852,
+    "lon": 73.80928,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7050060080",
+    "name": "Khares Eye Institute",
+    "lat": 18.51452,
+    "lon": 73.83174,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7050255935",
+    "name": "Dr Chavans Fracture and Orthopaedic Center",
+    "lat": 18.4786,
+    "lon": 73.82385,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7050392540",
+    "name": "Gultekdi Nursing and Home",
+    "lat": 18.49268,
+    "lon": 73.86855,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7050589614",
+    "name": "Ashakiran Hospital",
+    "lat": 18.51583,
+    "lon": 73.8475,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7050627585",
+    "name": "Sant Dnyaneswar Medical Education Research Centre",
+    "lat": 18.51378,
+    "lon": 73.8477,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7051137462",
+    "name": "Dr. Karve Childrens Hospital",
+    "lat": 18.52599,
+    "lon": 73.85012,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7051137468",
+    "name": "Yashashree and Nursing Home",
+    "lat": 18.48867,
+    "lon": 73.85024,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7051344983",
+    "name": "Vinayak Netralaya - Pune",
+    "lat": 18.51059,
+    "lon": 73.81798,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7051943843",
+    "name": "Rahel Hospital",
+    "lat": 18.51529,
+    "lon": 73.87546,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7052133789",
+    "name": "Nachiket Hospital Pvt Ltd",
+    "lat": 18.50769,
+    "lon": 73.83106,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7052815781",
+    "name": "Shahade Hospital",
+    "lat": 18.49787,
+    "lon": 73.85376,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7052818652",
+    "name": "Dada Laser Eye Institute",
+    "lat": 18.51094,
+    "lon": 73.8799,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7052987873",
+    "name": "Dr.Prakash Katariya Laser Cure",
+    "lat": 18.52236,
+    "lon": 73.84413,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7053000962",
+    "name": "Siddharth Hospital, Pune",
+    "lat": 18.49006,
+    "lon": 73.86846,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7053195972",
+    "name": "Dr.Purohit Nursing Home",
+    "lat": 18.49034,
+    "lon": 73.84431,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7054106775",
+    "name": "Suraj Hospital",
+    "lat": 18.4814,
+    "lon": 73.87247,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7054762489",
+    "name": "Chinchanikar Hospital",
+    "lat": 18.47854,
+    "lon": 73.82355,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7055062380",
+    "name": "Vinod Memorial Multispeciality Hospital",
+    "lat": 18.57321,
+    "lon": 73.87747,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7055280594",
+    "name": "Om Hospital",
+    "lat": 18.52924,
+    "lon": 73.83072,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7055494791",
+    "name": "Pune Adventist Hospital;advantist hospital",
+    "lat": 18.49194,
+    "lon": 73.87102,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7055682925",
+    "name": "Mahajan Hospital",
+    "lat": 18.48407,
+    "lon": 73.857,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7055817022",
+    "name": "Om Prasuti Graha",
+    "lat": 18.54708,
+    "lon": 73.88852,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7059664354",
+    "name": "Shreenath Hospital, Pune",
+    "lat": 18.52111,
+    "lon": 73.90677,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7062490981",
+    "name": "Subodh Hospital",
+    "lat": 18.50352,
+    "lon": 73.81376,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7062497086",
+    "name": "Chinmay Institute Of Paediatrics",
+    "lat": 18.50833,
+    "lon": 73.8457,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7062497106",
+    "name": "Patil Hospital - Pune",
+    "lat": 18.47977,
+    "lon": 73.82517,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7063077070",
+    "name": "Paranjpe Eye Clinic and Eye Surgery Centre",
+    "lat": 18.51835,
+    "lon": 73.8404,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7063808901",
+    "name": "Ace Hospital",
+    "lat": 18.50493,
+    "lon": 73.83036,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7063909902",
+    "name": "Jeewan Jyot Multispeciality Medical Care Center",
+    "lat": 18.55695,
+    "lon": 73.90748,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7065561512",
+    "name": "Global Hospital & Research Institute",
+    "lat": 18.50132,
+    "lon": 73.84101,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7065820589",
+    "name": "Lokmanya Hospital, Pune",
+    "lat": 18.50891,
+    "lon": 73.8341,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7068097000",
+    "name": "Dhanwantari Hospital",
+    "lat": 18.51945,
+    "lon": 73.8659,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7068155283",
+    "name": "Pungliya Hospital",
+    "lat": 18.52268,
+    "lon": 73.85085,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7068194960",
+    "name": "B.J.Medical College and Sassoon Hospital",
+    "lat": 18.52623,
+    "lon": 73.87116,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7068429388",
+    "name": "Karne Hospital Pvt Ltd",
+    "lat": 18.49547,
+    "lon": 73.85837,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7069569120",
+    "name": "Vibhute Hospital",
+    "lat": 18.50405,
+    "lon": 73.85184,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7069814051",
+    "name": "Kulkarni Endo Surgery Institute and Reconstructive Urology Centre",
+    "lat": 18.50978,
+    "lon": 73.80299,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7070130323",
+    "name": "Vinnayak Hospital",
+    "lat": 18.48549,
+    "lon": 73.87175,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7070722452",
+    "name": "Shah Hospital",
+    "lat": 18.54865,
+    "lon": 73.88931,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7072638950",
+    "name": "Pune City Eye Hospital",
+    "lat": 18.52986,
+    "lon": 73.87609,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7072671011",
+    "name": "Talesara Hospital",
+    "lat": 18.54987,
+    "lon": 73.88877,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7073537781",
+    "name": "Deodhar Eye Hospital",
+    "lat": 18.51145,
+    "lon": 73.83647,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7073895620",
+    "name": "Godbole Hospital",
+    "lat": 18.51121,
+    "lon": 73.85132,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7073944656",
+    "name": "Kataria Hospital",
+    "lat": 18.54563,
+    "lon": 73.88621,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7073949807",
+    "name": "Dr.Pawar Eye Hospital",
+    "lat": 18.50927,
+    "lon": 73.84493,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7073949844",
+    "name": "National Institute Of Ophthalmology",
+    "lat": 18.55969,
+    "lon": 73.81483,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7073949908",
+    "name": "Nm Wadia Institute Of Cardiology",
+    "lat": 18.53074,
+    "lon": 73.87719,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7076609422",
+    "name": "Samarth Hospital, Pune",
+    "lat": 18.51952,
+    "lon": 73.86206,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7076609427",
+    "name": "Amai Charitable Trust Institute Of Urology",
+    "lat": 18.55505,
+    "lon": 73.81624,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7076609433",
+    "name": "Z Y - Vision",
+    "lat": 18.52474,
+    "lon": 73.84085,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7079392093",
+    "name": "Shreeyash Hospital, Pune",
+    "lat": 18.51557,
+    "lon": 73.84187,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7079392109",
+    "name": "Dr. Todkar Hospital",
+    "lat": 18.52295,
+    "lon": 73.86395,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7079392124",
+    "name": "Khenat Hospital and Home",
+    "lat": 18.48913,
+    "lon": 73.81382,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7079411416",
+    "name": "Manoj Clinic / Gore Hospital",
+    "lat": 18.51178,
+    "lon": 73.84879,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7080205212",
+    "name": "Vishwaniranjan Eye Hospital",
+    "lat": 18.51138,
+    "lon": 73.84583,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7080269598",
+    "name": "Shree Nursing and Home",
+    "lat": 18.48458,
+    "lon": 73.81598,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7080269671",
+    "name": "Ram Krishna Hospital, Pune",
+    "lat": 18.50925,
+    "lon": 73.84834,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7081375496",
+    "name": "Serene Hospital Pvt Ltd",
+    "lat": 18.56979,
+    "lon": 73.8819,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7082519014",
+    "name": "Deshpande Hospital",
+    "lat": 18.50499,
+    "lon": 73.90224,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7083324260",
+    "name": "Centre For Laproscopy Surgery",
+    "lat": 18.52079,
+    "lon": 73.84525,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7085878707",
+    "name": "Kawedia Hospital",
+    "lat": 18.50706,
+    "lon": 73.87826,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7086532369",
+    "name": "Ambekar Hospital",
+    "lat": 18.50541,
+    "lon": 73.81754,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7087491750",
+    "name": "Harijivan Hospital",
+    "lat": 18.50014,
+    "lon": 73.85424,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7087636861",
+    "name": "Dugad Hospital Pvt Ltd",
+    "lat": 18.49095,
+    "lon": 73.85801,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7210920527",
+    "name": "Agrawal Hospital",
+    "lat": 18.48919,
+    "lon": 73.81404,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7213397284",
+    "name": "Inaam General Hospital",
+    "lat": 18.56186,
+    "lon": 73.89259,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7213418416",
+    "name": "Aditya Eye Hospital & Lasik Centre",
+    "lat": 18.56023,
+    "lon": 73.89535,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7213434440",
+    "name": "Rutu Anand Hospital",
+    "lat": 18.56295,
+    "lon": 73.89423,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7213437174",
+    "name": "Freedom Fighter Gangaram Karne Hospital",
+    "lat": 18.5565,
+    "lon": 73.89728,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7213442686",
+    "name": "Chatrapati Shivray Hospital Pune",
+    "lat": 18.56239,
+    "lon": 73.89658,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7213470815",
+    "name": "Shree Hospital",
+    "lat": 18.55336,
+    "lon": 73.89898,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7213492164",
+    "name": "Neney's Hospital",
+    "lat": 18.55362,
+    "lon": 73.89962,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7226627567",
+    "name": "PMC ARMED FORCE MEDICAL COLLEGE(AFMC)",
+    "lat": 18.50392,
+    "lon": 73.89012,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7226627720",
+    "name": "Late Anandibai Narhar Gadgil Hospital",
+    "lat": 18.50241,
+    "lon": 73.83868,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7226727370",
+    "name": "Sutika Seva Mandir",
+    "lat": 18.51391,
+    "lon": 73.84655,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7226727441",
+    "name": "Sasoon Hospital",
+    "lat": 18.52187,
+    "lon": 73.87312,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7621410003",
+    "name": "Colony Nursing Home",
+    "lat": 18.50308,
+    "lon": 73.84469,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7649461729",
+    "name": "Kamal Hospital",
+    "lat": 18.49448,
+    "lon": 73.90252,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7649461745",
+    "name": "Petals Hospital",
+    "lat": 18.5493,
+    "lon": 73.88884,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7649461747",
+    "name": "Dr. Agarwals Eye Hospital",
+    "lat": 18.55355,
+    "lon": 73.80838,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7649461754",
+    "name": "N. M. Wadia Hospital",
+    "lat": 18.53072,
+    "lon": 73.87695,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7649461757",
+    "name": "Shahu Hospital",
+    "lat": 18.48209,
+    "lon": 73.89936,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7649461763",
+    "name": "Dr. Shraddha Angal",
+    "lat": 18.54096,
+    "lon": 73.82976,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7649461779",
+    "name": "New Command Hospital",
+    "lat": 18.49565,
+    "lon": 73.88452,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7649461783",
+    "name": "Serene Hospital",
+    "lat": 18.56984,
+    "lon": 73.88233,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7649461787",
+    "name": "Chaitanya General Hospital",
+    "lat": 18.51998,
+    "lon": 73.90678,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7649461805",
+    "name": "Kasturba General Hospital",
+    "lat": 18.57254,
+    "lon": 73.88151,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7649461810",
+    "name": "Vinayak Hospital",
+    "lat": 18.56842,
+    "lon": 73.87974,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7649461825",
+    "name": "Ayodhya Trust General Hospital",
+    "lat": 18.49253,
+    "lon": 73.90377,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453309",
+    "name": "Anup Hospital",
+    "lat": 18.49874,
+    "lon": 73.83831,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453312",
+    "name": "Apex Superspeciality Hospital",
+    "lat": 18.5076,
+    "lon": 73.84394,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453318",
+    "name": "Date Hospital",
+    "lat": 18.51024,
+    "lon": 73.85223,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453320",
+    "name": "Morya General Hospital",
+    "lat": 18.51479,
+    "lon": 73.84843,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453323",
+    "name": "Suman Hospital",
+    "lat": 18.49235,
+    "lon": 73.85346,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453326",
+    "name": "Sabane Hospital",
+    "lat": 18.5107,
+    "lon": 73.84343,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453329",
+    "name": "Kamat Hospital",
+    "lat": 18.51244,
+    "lon": 73.86939,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453330",
+    "name": "Bindu Madhav Thakarey Hospital",
+    "lat": 18.49613,
+    "lon": 73.81711,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453338",
+    "name": "Bhagirathi Children's Hospital",
+    "lat": 18.49472,
+    "lon": 73.8229,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453339",
+    "name": "Vishranti Hospital",
+    "lat": 18.50863,
+    "lon": 73.87445,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453340",
+    "name": "Matru Seva Hospital;Pacharne Hospital",
+    "lat": 18.51631,
+    "lon": 73.872,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453344",
+    "name": "Shraddha Hospital",
+    "lat": 18.49093,
+    "lon": 73.84593,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453349",
+    "name": "Purohit Hospital",
+    "lat": 18.49756,
+    "lon": 73.85132,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453353",
+    "name": "Bapat Hospital",
+    "lat": 18.53036,
+    "lon": 73.84206,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453365",
+    "name": "Kothari Orthopaedic Hospital",
+    "lat": 18.48917,
+    "lon": 73.85717,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453367",
+    "name": "Kalyani Hospital",
+    "lat": 18.50466,
+    "lon": 73.85921,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453368",
+    "name": "Kumbhare Hospital",
+    "lat": 18.5218,
+    "lon": 73.86224,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453369",
+    "name": "\u092f\u094b\u0917\u0947\u0936 \u0939\u0949\u0938\u094d\u092a\u093f\u091f\u0932",
+    "lat": 18.51044,
+    "lon": 73.84788,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453375",
+    "name": "Sai Samarth Hospital",
+    "lat": 18.5231,
+    "lon": 73.86816,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453377",
+    "name": "Dr. Baba Saheb Ambedkar Hospital;dr baba saheb ambedkar hospital",
+    "lat": 18.4963,
+    "lon": 73.87021,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453378",
+    "name": "Todkar Hospital",
+    "lat": 18.51071,
+    "lon": 73.86609,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453379",
+    "name": "Shaishav Children's Hospital",
+    "lat": 18.51379,
+    "lon": 73.84762,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453383",
+    "name": "Suyash Hospital",
+    "lat": 18.50019,
+    "lon": 73.8124,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453385",
+    "name": "Swanand Hospital",
+    "lat": 18.52974,
+    "lon": 73.83398,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453390",
+    "name": "Shintre Hospital",
+    "lat": 18.51224,
+    "lon": 73.84993,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453392",
+    "name": "Alliance Munot Hospital;munot hospital",
+    "lat": 18.50254,
+    "lon": 73.8687,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453393",
+    "name": "Kalavati Mavale Hospital",
+    "lat": 18.51504,
+    "lon": 73.84641,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453399",
+    "name": "ASG Eye Hospital",
+    "lat": 18.52893,
+    "lon": 73.84364,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453401",
+    "name": "Rode Hospital",
+    "lat": 18.50918,
+    "lon": 73.81496,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453402",
+    "name": "Mantri Hospital",
+    "lat": 18.5052,
+    "lon": 73.83417,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453403",
+    "name": "Kering Hospital;kering clinic",
+    "lat": 18.50299,
+    "lon": 73.86821,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453409",
+    "name": "Kirad Hospital",
+    "lat": 18.51435,
+    "lon": 73.86891,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453412",
+    "name": "Chajed Hospital",
+    "lat": 18.50451,
+    "lon": 73.86282,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453413",
+    "name": "KEM Hospital",
+    "lat": 18.52006,
+    "lon": 73.86698,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453415",
+    "name": "Hope Hospital",
+    "lat": 18.51269,
+    "lon": 73.86952,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453417",
+    "name": "David Sassoon Hospital",
+    "lat": 18.52528,
+    "lon": 73.8705,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453418",
+    "name": "MJM Hospital",
+    "lat": 18.52451,
+    "lon": 73.84382,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_7651453422",
+    "name": "Chavan Hospital",
+    "lat": 18.5022,
+    "lon": 73.85846,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_8204734780",
+    "name": "dental health care",
+    "lat": 18.50622,
+    "lon": 73.86259,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_8257047090",
+    "name": "ARCUS HOSPITAL",
+    "lat": 18.48891,
+    "lon": 73.89908,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_8257587510",
+    "name": "Sai Allergy asthma Eye Children Hospital",
+    "lat": 18.48529,
+    "lon": 73.85143,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_8257680507",
+    "name": "Sathe Multispeciality Hospital",
+    "lat": 18.50679,
+    "lon": 73.80373,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_8266093820",
+    "name": "Facethetics - Dental, Facial Cosmetics(BOTOX), & Hair Transplant Clinique",
+    "lat": 18.51363,
+    "lon": 73.82858,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_8806123923",
+    "name": "Ordnance Factory Hospital",
+    "lat": 18.56078,
+    "lon": 73.84445,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_8813394447",
+    "name": "Matoshri Ramabai Ambedkar Prasutigriha",
+    "lat": 18.50278,
+    "lon": 73.85001,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_8813476678",
+    "name": "Savitribai Phule Meternity Home",
+    "lat": 18.50486,
+    "lon": 73.8612,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_8813545344",
+    "name": "Janata Hospital ,Pune",
+    "lat": 18.49939,
+    "lon": 73.84701,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_8813660507",
+    "name": "G B Indumati Manilal Khanna Hospital",
+    "lat": 18.49258,
+    "lon": 73.86659,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_8814103200",
+    "name": "Apollo Spectra Hospitals",
+    "lat": 18.50298,
+    "lon": 73.85202,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_9215757550",
+    "name": "Metropolis Healthcare Ltd",
+    "lat": 18.50785,
+    "lon": 73.82651,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_9296005824",
+    "name": "Ruby Hall",
+    "lat": 18.53347,
+    "lon": 73.87697,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10108645141",
+    "name": "Aashirwad Hospital",
+    "lat": 18.47973,
+    "lon": 73.82826,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172902304",
+    "name": "Modern Hospital",
+    "lat": 18.51572,
+    "lon": 73.86884,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172914028",
+    "name": "metro advanced homeopathy clinic",
+    "lat": 18.48643,
+    "lon": 73.87404,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172914030",
+    "name": "anvi ENT and thyroid clinic",
+    "lat": 18.484,
+    "lon": 73.87163,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172914032",
+    "name": "sharda clinic",
+    "lat": 18.50124,
+    "lon": 73.86634,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172914040",
+    "name": "immunology and rheumatology clinic",
+    "lat": 18.4959,
+    "lon": 73.88867,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172914044",
+    "name": "apollo clinic",
+    "lat": 18.56447,
+    "lon": 73.91393,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172926367",
+    "name": "kedari Hospital",
+    "lat": 18.5153,
+    "lon": 73.87545,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172942165",
+    "name": "Panchsheel Hospital",
+    "lat": 18.51408,
+    "lon": 73.86925,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172942167",
+    "name": "Sardar Patel Genral Hospital",
+    "lat": 18.50274,
+    "lon": 73.87712,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172942169",
+    "name": "Allice Munot Hospital",
+    "lat": 18.50255,
+    "lon": 73.8687,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172942170",
+    "name": "Kering Hospital",
+    "lat": 18.503,
+    "lon": 73.86813,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172942172",
+    "name": "G.M Babubbhai Memo Hospital",
+    "lat": 18.50811,
+    "lon": 73.87514,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172942175",
+    "name": "Military Hospital",
+    "lat": 18.49243,
+    "lon": 73.88234,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172942176",
+    "name": "CHandralok Hospital",
+    "lat": 18.48033,
+    "lon": 73.86102,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172977859",
+    "name": "Oyster and Pearl Hospital",
+    "lat": 18.53189,
+    "lon": 73.84728,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172977865",
+    "name": "Ghaisas ENT Hospital",
+    "lat": 18.51724,
+    "lon": 73.84236,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172977866",
+    "name": "Phadke Hospital",
+    "lat": 18.51831,
+    "lon": 73.84388,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172977868",
+    "name": "Seth Tarachand Hospital",
+    "lat": 18.51777,
+    "lon": 73.86403,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172977869",
+    "name": "Shre Samarth Hospital",
+    "lat": 18.51805,
+    "lon": 73.86586,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172977877",
+    "name": "Ruby Hall Clinic",
+    "lat": 18.53278,
+    "lon": 73.87737,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172977879",
+    "name": "Red blood hospital",
+    "lat": 18.52739,
+    "lon": 73.87102,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172977880",
+    "name": "Nityashraddha super speciality hospital",
+    "lat": 18.52785,
+    "lon": 73.87609,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172977881",
+    "name": "N. M. Wadia Institute of Cardiology",
+    "lat": 18.53075,
+    "lon": 73.87719,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172977882",
+    "name": "WEST VALLEY MULTISPECIALITY HOSPITAL PVT LTD",
+    "lat": 18.53514,
+    "lon": 73.87653,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172977883",
+    "name": "Kawediya Hospital",
+    "lat": 18.52423,
+    "lon": 73.86271,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172977888",
+    "name": "Unique Hospital",
+    "lat": 18.52216,
+    "lon": 73.86768,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172977893",
+    "name": "Sadhu Vaswani Missions Medical Complex",
+    "lat": 18.53477,
+    "lon": 73.88744,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172986709",
+    "name": "Poona Hospital and Research Centre",
+    "lat": 18.51064,
+    "lon": 73.84204,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172986710",
+    "name": "DEENDAYAL MEMORIAL HOSPITAL",
+    "lat": 18.52498,
+    "lon": 73.84117,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172986712",
+    "name": "KAMLA NEHRU HOSPITAL",
+    "lat": 18.52294,
+    "lon": 73.86203,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10172986714",
+    "name": "GLOBAL HOSPITAL & RESEARCH",
+    "lat": 18.50129,
+    "lon": 73.841,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10173005947",
+    "name": "Prayag Hospital",
+    "lat": 18.51748,
+    "lon": 73.84279,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10173007817",
+    "name": "PUNE ADVENTIST HOSPITAL",
+    "lat": 18.49195,
+    "lon": 73.87096,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_10755920583",
+    "name": "White Shine Multispeciality Dental Clinic",
+    "lat": 18.57554,
+    "lon": 73.90692,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_11909388851",
+    "name": "Dr. Rajendra Mehata Hospital",
+    "lat": 18.53769,
+    "lon": 73.85153,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_12595620688",
+    "name": "Align Diagnostic & BoneCare Polyclinic",
+    "lat": 18.50271,
+    "lon": 73.81704,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_13332950667",
+    "name": "City Hospital",
+    "lat": 18.51958,
+    "lon": 73.88003,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_13366468376",
+    "name": "MyGyne Clinic",
+    "lat": 18.50824,
+    "lon": 73.82218,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_13619854841",
+    "name": "Neneys Hospital",
+    "lat": 18.55364,
+    "lon": 73.89963,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_13644813722",
+    "name": "Dr. Arundhati kale sidhaye's Vision Eye Center",
+    "lat": 18.50804,
+    "lon": 73.80596,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_13650019585",
+    "name": "Ruby hall hospital",
+    "lat": 18.53273,
+    "lon": 73.87737,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_13666484240",
+    "name": "Dr Sunny Dole",
+    "lat": 18.50192,
+    "lon": 73.81668,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_13780010174",
+    "name": "Healing Hands Clinic - Dhole Patil Road, Pune",
+    "lat": 18.53264,
+    "lon": 73.87688,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_13964029513",
+    "name": "Paranjpe Hospital",
+    "lat": 18.51202,
+    "lon": 73.84576,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_14122524750",
+    "name": "Dr. Rakhi K. Dutta",
+    "lat": 18.53544,
+    "lon": 73.8876,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_14153069361",
+    "name": "Dr Sarodes Clinic",
+    "lat": 18.49862,
+    "lon": 73.85035,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_14170420969",
+    "name": "Dr. Rahul Pavshere | Oncosurgeon in Yerwada",
+    "lat": 18.55335,
+    "lon": 73.89894,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_14206160263",
+    "name": "Dr Chetan Pradhan Clinic",
+    "lat": 18.4812,
+    "lon": 73.86246,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_14209379502",
+    "name": "Dr Rupesh Lunkad | RL Gastro Care",
+    "lat": 18.48907,
+    "lon": 73.85379,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_108099341",
+    "name": "Rajiv Gandhi Hospital",
+    "lat": 18.54558,
+    "lon": 73.88376,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_162972236",
+    "name": "Inamdar Hospital",
+    "lat": 18.50317,
+    "lon": 73.90002,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_207872391",
+    "name": "Deenanath Mangeshkar Hospital",
+    "lat": 18.50201,
+    "lon": 73.83284,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_218110050",
+    "name": "Sancheti Hospital",
+    "lat": 18.52995,
+    "lon": 73.85288,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_218733858",
+    "name": "Deoyani Hospital",
+    "lat": 18.49589,
+    "lon": 73.81228,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_229849146",
+    "name": "Jog Hospital",
+    "lat": 18.50943,
+    "lon": 73.82117,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_238842692",
+    "name": "Oyster and Pearl Hospital Tulip",
+    "lat": 18.53191,
+    "lon": 73.84727,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_249252730",
+    "name": "Navalmal Firodiya Super- Hospital",
+    "lat": 18.51709,
+    "lon": 73.83302,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_255661295",
+    "name": "Sanjeevan Hospital, Pune",
+    "lat": 18.51015,
+    "lon": 73.83711,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_261258208",
+    "name": "Ratna Memorial Hospital",
+    "lat": 18.52768,
+    "lon": 73.82952,
+    "capacity": 100,
+    "bedsOccupied": 55,
+    "max": 100,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_279403631",
+    "name": "PMC - Late. Jayabai Nanasaheb Sutar Home",
+    "lat": 18.50363,
+    "lon": 73.8077,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_282054948",
+    "name": "Deccan Hardikar Hospital",
+    "lat": 18.53022,
+    "lon": 73.84754,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_331500153",
+    "name": "Jehangir Hospital",
+    "lat": 18.53038,
+    "lon": 73.87666,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_359811299",
+    "name": "Primus Diagnostics - MRI CT-SCAN CENTRE",
+    "lat": 18.54919,
+    "lon": 73.89236,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_359998821",
+    "name": "eshavari clinic",
+    "lat": 18.52631,
+    "lon": 73.8519,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_360237275",
+    "name": "skincare clinic",
+    "lat": 18.4859,
+    "lon": 73.88859,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_360254782",
+    "name": "Annachatre Clinic",
+    "lat": 18.49021,
+    "lon": 73.84947,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_380417656",
+    "name": "Dalvi Hospital",
+    "lat": 18.53314,
+    "lon": 73.84877,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_380417659",
+    "name": "Inlaks and Budhrani Hospital,Sadhu Vaswani Mission's Medical Complex",
+    "lat": 18.53503,
+    "lon": 73.88738,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_380417662",
+    "name": "Naydu Rugnalay",
+    "lat": 18.53135,
+    "lon": 73.86902,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_1232100918",
+    "name": "Pandit Clinic",
+    "lat": 18.49562,
+    "lon": 73.85944,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_1412791747",
+    "name": "Asian Eye Hospital",
+    "lat": 18.53158,
+    "lon": 73.87582,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_1531107141",
+    "name": "Unity Hospital",
+    "lat": 18.56409,
+    "lon": 73.81267,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  },
+  {
+    "id": "H_OSM_1550971040",
+    "name": "Clinic",
+    "lat": 18.49272,
+    "lon": 73.8397,
+    "capacity": 120,
+    "bedsOccupied": 66,
+    "max": 120,
+    "isFlooded": false
+  }
+]
